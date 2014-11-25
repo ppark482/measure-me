@@ -19,7 +19,9 @@
 					var params = 'username='+user.username+'&password='+user.password;
           $http.get('https://api.parse.com/1/login/?'+params, PARSE_HEADERS)
             .success( function (data) {
-              console.log(data);
+            	App.user = data;
+            	App.seshTok = data.sessionToken;
+              $location.path('/myaccount');
           });
 				}; // end login
 

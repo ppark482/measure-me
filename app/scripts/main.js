@@ -1,3 +1,5 @@
+var App = {};
+
 (function(){
 
 	angular.module('FinalProject', ['ngRoute', 'mm.foundation']) // setter
@@ -21,6 +23,10 @@
 			$routeProvider.when('/login', {
 				templateUrl: 'templates/login_template.html',
 				controller: 'AccountControl'
+			}); // end route
+			$routeProvider.when('/myaccount', {
+				templateUrl: 'templates/my_console.html',
+				controller: 'MyAccountControl'
 			}); // end route
 
 		}); // end config

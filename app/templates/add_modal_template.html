@@ -1,0 +1,12 @@
+<div ng-controller="MainModalControl">
+	<h3>{{ project.title }}</h3>
+	<form ng-submit="addProject(project)">
+
+		<input id="projectTitle" ng-model="project.title" type="text" placeholder="Add a name for your title:">
+		<input id="projectHours" ng-model="project.hours" type="text" placeholder="Expected number of hours to completion:">
+		<input id="projectWeeks" ng-model="project.weeks" type="text" placeholder="Expected number of weeks to completion:">
+		<button>Build</button>
+
+	</form>
+  <a class="close-reveal-modal" ng-click="cancel()">&#215;</a>
+</div>
