@@ -16,15 +16,11 @@
 				}; // end register
 
 				var login = function (user) {
-					var username = encodeURIComponent('username=' + user.username);
-					var password = encodeURIComponent('password=' + user.password);
-					console.log(username);
-					$http.get(loginUrl, PARSE_HEADERS)
-						.success( function () {
-							console.log('logged in as ' + user);
-							$location.path('/myaccount');
-						} // end success
-					); // end get
+					var params = 'username='+user.username+'&password='+user.password;
+          $http.get('https://api.parse.com/1/login/?'+params, PARSE_HEADERS)
+            .success( function (data) {
+              console.log(data);
+          });
 				}; // end login
 
 				return {
