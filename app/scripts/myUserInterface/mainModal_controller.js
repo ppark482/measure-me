@@ -23,12 +23,8 @@
 			    }, function () {
 			      $log.info('Modal closed');
 			    }); // end modalInstance.result
-				}; // end scope.open
 
-				$scope.addProject = function (project) {
-					// to ProjectFactory
-					ProjectFactory.addProject(project);
-				}; // end addProject
+				}; // end open
 
 			} // end function
 		]) // end controller
@@ -36,15 +32,24 @@
 	// $modalInstance represents a modal window (instance) dependency.
 	// not the same as the $modal service used above.
 
-	.controller('ModalInstanceControl', function ($scope, $modalInstance, items) {
+	.controller('ModalInstanceControl', ['$scope', '$modalInstance', 'ProjectFactory',
+		function ($scope, $modalInstance, ProjectFactory) {
 
-	  $scope.ok = function () {
-	    $modalInstance.close($scope.selected.item);
-	  };
+			$scope.addProject = function (project) {
+				// to ProjectFactory
+				ProjectFactory.addProject(project);
+				$modalInstance.close();
+			}; // end addProject
 
-	  $scope.cancel = function () {
-	    $modalInstance.dismiss('cancel');
-	  };
-	}); // end controller
+		  $scope.ok = function () {
+		    $modalInstance.close();
+		  }; // end ok
+
+		  $scope.cancel = function () {
+		    $modalInstance.dismiss('cancel');
+		  }; // end cancel
+
+		} // end function
+	]); // end controller
 
 }()); // end of iif

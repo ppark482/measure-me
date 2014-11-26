@@ -17,7 +17,7 @@
 					$http.post(projectURL, project, PARSE_HEADERS)
 						.success(function (){
 							console.log('Project Added');
-							
+							$location.path('/myconsole');
 						}); // end success
 				}; // end addProject
 
