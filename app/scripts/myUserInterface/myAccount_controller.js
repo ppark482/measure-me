@@ -1,11 +1,13 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('MyAccountControl', ['$scope', 'MyAccountFactory',
-			function($scope, MyAccountFactory) {
-				console.log(App.user);
-				$scope.user = App.user;
-				
+		.controller('MyAccountControl', ['$scope', 'AccountFactory',
+			function($scope, AccountFactory) {
+				$scope.user = sessionStorage;
+
+				$scope.logout = function () {
+					AccountFactory.logout();
+				}; // end logout
 
 			} // end function
 		]); // end controller

@@ -1,5 +1,3 @@
-var App = {};
-
 (function(){
 
 	angular.module('FinalProject', ['ngRoute', 'mm.foundation']) // setter
@@ -24,11 +22,15 @@ var App = {};
 				templateUrl: 'templates/login_template.html',
 				controller: 'AccountControl'
 			}); // end route
-			$routeProvider.when('/myaccount', {
+			$routeProvider.when('/myconsole', {
 				templateUrl: 'templates/my_console.html',
 				controller: 'MyAccountControl'
 			}); // end route
 
 		}); // end config
+
+		if(sessionStorage) {
+
+		}
 
 }()); // end iif

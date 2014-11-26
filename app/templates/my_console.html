@@ -1,6 +1,13 @@
 <h3>My Console</h3>
-<h4>Welcome {{ user.username }}</h4>
+<hr>
+<h4>Welcome {{ user.username }}</h4> <button ng-click="logout()">Log Out</button>
+<ul>
+	<li>Your email is: {{ user.email }}</li>
+	<li>Your session token is: {{ user.sessionToken }}</li>
+</ul>
+<hr>
 <div ng-controller="MainModalControl">
   <button class="button" ng-click="open()">Add Project</button>
- </div>
+</div>
+
 

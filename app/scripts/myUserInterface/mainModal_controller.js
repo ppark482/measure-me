@@ -29,6 +29,12 @@
 				console.log(project);
 
 			}; // end addProject
+
+			$scope.confidence = [
+				
+
+			]
+
 	}) // end controller
 
 	// $modalInstance represents a modal window (instance) dependency.
