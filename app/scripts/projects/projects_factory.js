@@ -14,6 +14,14 @@
 				var addProject = function (project) {
 					// from MainModalControl
 					console.log(project);
+					var user = $cookieStore.get('currentUser');
+					var userId = {};
+					userId[user.objectId] = {
+					  'read': true,
+					  'write': true
+					};
+					project.ACL = $.extend(userId, { '*': {'read' : true}}) // end set ACL
+					console.log(project.ACL);
 					$http.post(projectURL, project, PARSE_HEADERS)
 						.success(function (){
 							console.log('Project Added');
