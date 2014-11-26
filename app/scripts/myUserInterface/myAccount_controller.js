@@ -1,9 +1,10 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('MyAccountControl', ['$scope', 'AccountFactory',
-			function($scope, AccountFactory) {
-				$scope.user = sessionStorage;
+		.controller('MyAccountControl', ['$scope', 'AccountFactory', '$cookieStore',
+			function($scope, AccountFactory, $cookieStore) {
+
+				$scope.user = $cookieStore.get('currentUser');
 
 				$scope.logout = function () {
 					AccountFactory.logout();

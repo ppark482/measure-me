@@ -2,40 +2,36 @@
 
 	angular.module('FinalProject')
 
-		.controller('MainModalControl', function ($scope, $modal, $log) {
+		.controller('MainModalControl', ['$scope', '$modal', '$log', 'ProjectFactory',
+			 function ($scope, $modal, $log, ProjectFactory) {
 
-		  $scope.open = function () {
+			  $scope.open = function () {
 
-		    var modalInstance = $modal.open({
-		      templateUrl: 'templates/add_modal_template.html',
-		      controller: 'ModalInstanceControl',
-		      backdrop: true,
-		      resolve: {
-		        items: function () {
-		          return $scope.items;
-		        }
-		      }
-		    }); // end modalInstance
+			    var modalInstance = $modal.open({
+			      templateUrl: 'scripts/myUserInterface/add_modal_template.html',
+			      controller: 'ModalInstanceControl',
+			      backdrop: true,
+			      resolve: {
+			        items: function () {
+			          return $scope.items;
+			        }
+			      }
+			    }); // end modalInstance
 
-		    modalInstance.result.then(function (selectedItem) {
-		      $scope.selected = selectedItem;
-		    }, function () {
-		      $log.info('Modal closed');
-		    }); // end modalInstance.result
-			}; // end scope.open
+			    modalInstance.result.then(function (selectedItem) {
+			      $scope.selected = selectedItem;
+			    }, function () {
+			      $log.info('Modal closed');
+			    }); // end modalInstance.result
+				}; // end scope.open
 
-			$scope.addProject = function (project) {
-				console.log('Project Added');
-				console.log(project);
+				$scope.addProject = function (project) {
+					// to ProjectFactory
+					ProjectFactory.addProject(project);
+				}; // end addProject
 
-			}; // end addProject
-
-			$scope.confidence = [
-				
-
-			]
-
-	}) // end controller
+			} // end function
+		]) // end controller
 
 	// $modalInstance represents a modal window (instance) dependency.
 	// not the same as the $modal service used above.

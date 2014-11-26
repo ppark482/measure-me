@@ -1,8 +1,8 @@
 (function(){
 
 	angular.module('FinalProject')
-		.factory('AccountFactory', ['$rootScope', '$http', 'PARSE_HEADERS', '$location',
-			function($rootScope, $http, PARSE_HEADERS, $location){
+		.factory('AccountFactory', ['$rootScope', '$http', 'PARSE_HEADERS', '$location', '$cookieStore',
+			function($rootScope, $http, PARSE_HEADERS, $location, $cookieStore){
 
 				var userInfo;
 				var usersUrl = 'https://api.parse.com/1/users/';
@@ -20,23 +20,37 @@
 					var params = 'username='+user.username+'&password='+user.password;
           $http.get('https://api.parse.com/1/login/?'+params, PARSE_HEADERS)
             .success( function (data) {
-            	sessionStorage.setItem('username', data.username);
-            	sessionStorage.setItem('email', data.email);
-            	sessionStorage.setItem('objectId', data.objectId);
-            	sessionStorage.setItem('sessionToken', data.sessionToken);
-              $location.path('/myconsole');
+            	$cookieStore.put('currentUser', data)
+            	// sessionStorage.setItem('username', data.username);
+            	// sessionStorage.setItem('email', data.email);
+            	// sessionStorage.setItem('objectId', data.objectId);
+            	// sessionStorage.setItem('sessionToken', data.sessionToken);
+            	return checkUser();
           });
 				}; // end login
 
 				var logout = function () {
-					sessionStorage.clear();
-					$location.path('/login');
+					$cookieStore.remove('currentUser');
+					return checkUser();
 				}; // end logout
+
+				var checkUser = function () {
+					var user = $cookieStore.get('currentUser');
+					// console.log(user);
+					if (user !== undefined) {
+						console.log('User is ' + user.username);
+						$location.path('/myconsole');
+					} else {
+						console.log('No Current User logged in');
+						$location.path('/login');
+					}
+				}; // end checkUser
 
 				return {
 					register: register,
 					login: login,
-					logout: logout
+					logout: logout,
+					checkUser: checkUser
 				}
 
 			}]); // end of factory

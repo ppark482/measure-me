@@ -1,6 +1,6 @@
 (function(){
 
-	angular.module('FinalProject', ['ngRoute', 'mm.foundation']) // setter
+	angular.module('FinalProject', ['ngRoute', 'mm.foundation', 'ngCookies']) // setter
 
 		.constant('PARSE_HEADERS', {
       headers: {
@@ -15,15 +15,15 @@
 				controller: 'AccountControl'
 			}); // end route
 			$routeProvider.when('/register', {
-				templateUrl: 'templates/register_template.html',
+				templateUrl: 'scripts/accounts/register_template.html',
 				controller: 'AccountControl'
 			}); // end route
 			$routeProvider.when('/login', {
-				templateUrl: 'templates/login_template.html',
+				templateUrl: 'scripts/accounts/login_template.html',
 				controller: 'AccountControl'
 			}); // end route
 			$routeProvider.when('/myconsole', {
-				templateUrl: 'templates/my_console.html',
+				templateUrl: 'scripts/myUserInterface/my_console.html',
 				controller: 'MyAccountControl'
 			}); // end route
 
