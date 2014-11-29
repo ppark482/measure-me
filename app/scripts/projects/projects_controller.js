@@ -5,6 +5,9 @@
 			function($scope, $cookieStore, ProjectFactory){
 
 				ProjectFactory.getProjects()
+					// after getting all projects from server
+					// look through all projects for user specific projects
+					// allow controller to pass data to template
 					.success(function(results) {
 						var user = $cookieStore.get('currentUser');
 						var results = results.results;

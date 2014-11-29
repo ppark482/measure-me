@@ -22,8 +22,9 @@
 					project.ACL = $.extend(userId, { '*': {'read' : true}}); // end set ACL
 					project.userId = user.objectId;
 					$http.post(projectURL, project, PARSE_HEADERS)
-						.success(function (){
+						.then(function (){
 							console.log('Project Added');
+							$rootScope.$broadcast('project:added');
 							$location.path('/myconsole');
 						}); // end success
 				}; // end addProject
@@ -31,8 +32,7 @@
 
 				return {
 					getProjects: getProjects,
-					addProject: addProject,
-					getProjects: getProjects
+					addProject: addProject
 				}
 
 			} // end function

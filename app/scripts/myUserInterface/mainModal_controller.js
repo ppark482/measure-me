@@ -32,13 +32,15 @@
 	// $modalInstance represents a modal window (instance) dependency.
 	// not the same as the $modal service used above.
 
-	.controller('ModalInstanceControl', ['$scope', '$modalInstance', 'ProjectFactory',
-		function ($scope, $modalInstance, ProjectFactory) {
+	.controller('ModalInstanceControl', ['$scope', '$modalInstance', 'ProjectFactory', '$rootScope',
+		function ($scope, $modalInstance, ProjectFactory, $rootScope) {
 
 			$scope.addProject = function (project) {
 				// to ProjectFactory
 				ProjectFactory.addProject(project);
-				$modalInstance.close();
+				$rootScope.$on('project:added', function () {
+					$modalInstance.close();
+				});
 			}; // end addProject
 
 		  $scope.ok = function () {
