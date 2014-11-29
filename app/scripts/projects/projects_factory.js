@@ -29,11 +29,20 @@
 						}); // end success
 				}; // end addProject
 
+				var singleProject = {
+					// singleProject to pass between project views
+				} ;
 
 				return {
 					getProjects: getProjects,
-					addProject: addProject
-				}
+					addProject: addProject,
+					getSingle: function () {
+						return singleProject;
+					},
+					setSingle: function (value) {
+						singleProject = value;
+					}
+				} // end returns
 
 			} // end function
 		]); // end factory

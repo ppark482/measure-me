@@ -1,9 +1,11 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('SingleProjectControl', ['$scope', '$cookieStore', 'ProjectFactory', '$location', '$routeParams',
-			function($scope, $cookieStore, ProjectFactory, $location, $routeParams) {
+		.controller('SingleProjectControl', ['$scope', '$cookieStore', 'ProjectFactory', '$location', '$routeParams', '$http',
+			function($scope, $cookieStore, ProjectFactory, $location, $routeParams, $http) {
 
+				$scope.project = ProjectFactory.getSingle();
+				console.log($scope.project);
 
 			} // end function
 
