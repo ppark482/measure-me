@@ -6,22 +6,23 @@
 
 				var projectURL = 'https://api.parse.com/1/classes/Project/';
 
-				// var getProjects = function (project) {
-				// 	// Retrieve signed in user's projects
-				// 	return $http.get(projectURL, PARSE_HEADERS);
-				// };
+				var getProjects = function (project) {
+					// Need to get from server current user's projects
+					return $http.get(projectURL, PARSE_HEADERS);
+				}; // end getProject
+
+				// 'where={"playerName":"Sean Plott","cheatMode":false}'
 
 				var addProject = function (project) {
 					// from MainModalControl
-					console.log(project);
 					var user = $cookieStore.get('currentUser');
 					var userId = {};
 					userId[user.objectId] = {
 					  'read': true,
 					  'write': true
 					};
-					project.ACL = $.extend(userId, { '*': {'read' : true}}) // end set ACL
-					console.log(project.ACL);
+					project.ACL = $.extend(userId, { '*': {'read' : true}}); // end set ACL
+					project.userId = user.objectId;
 					$http.post(projectURL, project, PARSE_HEADERS)
 						.success(function (){
 							console.log('Project Added');
@@ -31,7 +32,9 @@
 
 
 				return {
-					addProject: addProject
+					getProjects: getProjects,
+					addProject: addProject,
+					getProjects: getProjects
 				}
 
 			} // end function

@@ -20,11 +20,7 @@
 					var params = 'username='+user.username+'&password='+user.password;
           $http.get('https://api.parse.com/1/login/?'+params, PARSE_HEADERS)
             .success( function (data) {
-            	$cookieStore.put('currentUser', data)
-            	// sessionStorage.setItem('username', data.username);
-            	// sessionStorage.setItem('email', data.email);
-            	// sessionStorage.setItem('objectId', data.objectId);
-            	// sessionStorage.setItem('sessionToken', data.sessionToken);
+            	$cookieStore.put('currentUser', data);
             	return checkUser();
           });
 				}; // end login
