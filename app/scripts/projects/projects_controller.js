@@ -1,8 +1,8 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ProjectsControl', ['$scope', '$cookieStore', 'ProjectFactory',
-			function($scope, $cookieStore, ProjectFactory){
+		.controller('ProjectsControl', ['$scope', '$cookieStore', 'ProjectFactory', '$location',
+			function($scope, $cookieStore, ProjectFactory, $location){
 
 				ProjectFactory.getProjects()
 					// after getting all projects from server
@@ -15,6 +15,10 @@
 							userId: user.objectId
 						});
 					}); // end success
+
+				$scope.clickProject = function (project) {
+					$location.path('/project/' + project.objectId);
+				}; // end clickProject
 
 			} // end function
 		]); // end controller

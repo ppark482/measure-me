@@ -13,7 +13,9 @@
 <div ng-controller="ProjectsControl">
 	<p>This is where the user's projects go.</p>
 	<ul ng-repeat="project in projects">
-		<li>{{ project.title }} will take {{ project.hours }} hours; to be complete in {{ project.weeks }} weeks.</li>
+		<li ng-click="clickProject(project)" id="{{ project.objectId }}">
+			{{ project.title }} will take {{ project.hours }} hours; to be complete in {{ project.weeks }} weeks.
+		</li>
 	</ul>
 </div>
 

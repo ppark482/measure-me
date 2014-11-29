@@ -2,6 +2,7 @@
 
 ### Techs:
 * Angular
+* Foundation
 * Bourbon
 * d3js
 * jQuery

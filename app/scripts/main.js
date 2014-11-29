@@ -26,6 +26,10 @@
 				templateUrl: 'scripts/myUserInterface/my_console.html',
 				controller: 'MyAccountControl'
 			}); // end route
+			$routeProvider.when('/project/:id', {
+				templateUrl: 'scripts/projects/single_project_template.html',
+				controller: 'SingleProjectControl'
+			}); // end route
 
 		}); // end config
 
