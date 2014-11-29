@@ -8,12 +8,10 @@
 					.success(function(results) {
 						var user = $cookieStore.get('currentUser');
 						var results = results.results;
-						console.log(results[1].userId);
-						$scope.usersProjects = _.where(results, {
+						$scope.projects = _.where(results, {
 							userId: user.objectId
 						});
-						console.log($scope.usersProjects);
-					});
+					}); // end success
 
 			} // end function
 		]); // end controller

@@ -11,8 +11,6 @@
 					return $http.get(projectURL, PARSE_HEADERS);
 				}; // end getProject
 
-				// 'where={"playerName":"Sean Plott","cheatMode":false}'
-
 				var addProject = function (project) {
 					// from MainModalControl
 					var user = $cookieStore.get('currentUser');
