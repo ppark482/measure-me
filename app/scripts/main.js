@@ -1,6 +1,6 @@
 (function(){
 
-	angular.module('FinalProject', ['ngRoute', 'mm.foundation', 'ngCookies']) // setter
+	angular.module('FinalProject', ['ngRoute', 'mm.foundation', 'ngCookies', 'angular-momentjs']) // setter
 
 		.constant('PARSE_HEADERS', {
       headers: {

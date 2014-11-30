@@ -1,1 +1,7 @@
-<h2>This is the single project view</h2>
+<button ng-click="consoleReturn()">Back to Console</button>
+<h2>{{ project.title }}</h2>
+<ul>
+	<li>Expected number of weeks to completion: {{ project.weeks }} </li>
+	<li>Project was created at {{ project.createdAt }}</li>
+	<li>Expected number of total hours to completion: {{ project.hours }}</li>
+</ul>

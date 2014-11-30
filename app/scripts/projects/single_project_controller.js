@@ -5,7 +5,10 @@
 			function($scope, $cookieStore, ProjectFactory, $location, $routeParams, $http) {
 
 				$scope.project = ProjectFactory.getSingle();
-				console.log($scope.project);
+
+				$scope.consoleReturn = function () {
+					ProjectFactory.consoleReturn();
+				};
 
 			} // end function
 
