@@ -11,10 +11,6 @@
 					ProjectFactory.consoleReturn();
 				};
 
-				$scope.addNewList = function () {
-					ListsFactory.addList();
-				};
-
 			} // end function
 
 		]); // end controller
