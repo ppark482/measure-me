@@ -26,6 +26,7 @@
 					$http.post(listURL, list, PARSE_HEADERS)
 						.then( function () {
 							console.log('list added');
+							$rootScope.$broadcast('newList:added');
 						});
 				};
 

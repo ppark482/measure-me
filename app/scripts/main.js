@@ -28,13 +28,9 @@
 			}); // end route
 			$routeProvider.when('/project/:id', {
 				templateUrl: 'scripts/projects/single_project_template.html',
-				controller: 'SingleProjectControl'
+				controller: 'SingleProjectControl',
 			}); // end route
 
 		}); // end config
-
-		if(sessionStorage) {
-
-		}
 
 }()); // end iif

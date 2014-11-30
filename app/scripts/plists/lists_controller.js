@@ -1,9 +1,9 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ListsControl', ['$scope', '$cookieStore', 'ListsFactory', 
+		.controller('ListsControl', ['$scope', '$cookieStore', 'ListsFactory', '$rootScope',
 			'ProjectFactory', '$location', '$routeParams', '$http', 
-			function($scope, $cookieStore, ListsFactory, ProjectFactory, $location, $routeParams, $http) {
+			function($scope, $cookieStore, ListsFactory, $rootScope, ProjectFactory, $location, $routeParams, $http) {
 
 				ListsFactory.getLists()
 					// after getting all projects from server
