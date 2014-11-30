@@ -5,3 +5,7 @@
 	<li>Project was created at {{ project.createdAt }}</li>
 	<li>Expected number of total hours to completion: {{ project.hours }}</li>
 </ul>
+<div ng-controller="ListsControl">
+	<input type="text" placeholder="Add New List" ng-model="list.title"><button ng-click="addList(list)">Add</button>
+	<ul id="newListTarget"></ul>
+</div>
