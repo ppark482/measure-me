@@ -21,8 +21,11 @@
           $http.get('https://api.parse.com/1/login/?'+params, PARSE_HEADERS)
             .success( function (data) {
             	$cookieStore.put('currentUser', data);
+            	// 'X-Parse-Session-Token' : 'jyLSaxAugbDna3uNNOT4wPDae',
+            	// console.log(data.sessionToken);
+            	// console.log(PARSE_HEADERS);
             	return checkUser();
-          });
+          }); // end success
 				}; // end login
 
 				var logout = function () {

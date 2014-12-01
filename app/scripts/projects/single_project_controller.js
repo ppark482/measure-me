@@ -7,6 +7,8 @@
 
 				$scope.project = $cookieStore.get('currentProject');
 
+				$scope.user = $cookieStore.get('currentUser');
+
 				$scope.consoleReturn = function () {
 					$cookieStore.remove('currentProject');
 					ProjectFactory.consoleReturn();

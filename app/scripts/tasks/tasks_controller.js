@@ -1,10 +1,8 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('SingleListControl', ['$scope', 
+		.controller('TasksControl', ['$scope', 
 			function ($scope) {
-
-				
 
 			} // end function
 		]); // end controller

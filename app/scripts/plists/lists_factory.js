@@ -25,15 +25,36 @@
 					list.userId = user.objectId;
 
 					$http.post(listURL, list, PARSE_HEADERS)
-						.then( function () {
+						.success( function () {
 							console.log('list added');
+							$('.toBeCleared').val('');
 							$rootScope.$broadcast('newList:added');
 						}); // end post
 				}; // end addlist
 
+				var clickList = function (list) {
+					$cookieStore.put('currentList', list);
+				}; // end clickList
+
+				var deleteList = function (id) {
+					var user = $cookieStore.get('currentUser');
+					PARSE_HEADERS = {
+        		headers : {
+          		'X-Parse-Application-Id': 'em1a4NnNesYbYgROEEOsuSpGbGuFkzazhHpyccNH',
+			        'X-Parse-REST-API-Key': 'iLZI2A5USKe6XqNUhWNdHXSYJQApRNim3HpmA8YY',
+          		'X-Parse-Session-Token' : user.sessionToken,
+          		'Content-Type': 'application/json'
+        		} // end headers
+        	}; // end PARSE_HEADERS
+          console.log(PARSE_HEADERS);
+					return $http.delete(listURL + id, PARSE_HEADERS);
+				}; // end deleteList
+
 				return {
 					getLists: getLists,
-					addList: addList
+					addList: addList,
+					clickList: clickList,
+					deleteList: deleteList
 				}
 
 			} // end function
