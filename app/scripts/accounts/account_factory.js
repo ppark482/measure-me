@@ -11,7 +11,8 @@
 				var register = function (user) {
 					$http.post(usersUrl, user, PARSE_HEADERS)
 						.success( function () {
-							$location.path('/');
+							login(user);
+							// $location.path('/myconsole');
 						} // end success
 					); // end post
 				}; // end register

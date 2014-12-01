@@ -8,11 +8,12 @@
 
 				var getLists = function () {
 					return $http.get(listURL, PARSE_HEADERS);
-				};
+				}; // end get lists
 
 				var addList = function (list) {
 					console.log('clicked');
 					var currentProject = ProjectFactory.getSingle();
+					console.log(currentProject);
 					list.projectId = currentProject.objectId
 					var user = $cookieStore.get('currentUser');
 					var userId = {};
@@ -27,8 +28,8 @@
 						.then( function () {
 							console.log('list added');
 							$rootScope.$broadcast('newList:added');
-						});
-				};
+						}); // end post
+				}; // end addlist
 
 				return {
 					getLists: getLists,

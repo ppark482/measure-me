@@ -8,8 +8,10 @@
 <div ng-controller="ListsControl">
 	<input type="text" placeholder="Add New List" ng-model="list.title"><button ng-click="addList(list)">Add</button>
 	<ul id="newListTarget"></ul>
-
-	<ul ng-repeat="list in lists">
-		<li> {{ list.title }} </li>
-	</ul>
+	<div>
+	<h4>Lists:</h4>
+		<ul class="projectWrapper">
+			<li ng-repeat="list in lists" class="projectCard block"> {{ list.title }} </li>
+		</ul>
+	</div>
 </div>

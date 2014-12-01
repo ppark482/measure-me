@@ -27,3 +27,22 @@ body {
     width: 400px;
   }
 }
+
+.projectWrapper {
+  @include outer-container;
+}
+
+li.block {
+  @include span-columns(3);
+  @include omega(4n);
+}
+
+.projectCard {
+  border: 1px solid #71A8A2;
+  background-color: white;
+  padding: 15px;
+  cursor: pointer;
+  display: inline-block;
+  height: 180px;
+  margin-bottom: 15px;
+}
