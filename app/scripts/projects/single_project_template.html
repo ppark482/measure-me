@@ -15,7 +15,7 @@
 					<ul>
 						<li ng-repeat="task in tasks | filter: { listId: list.objectId }">{{ task.title }}</li>
 					</ul>
-					<input type="text" placeholder="Add New Task" ng-model="task.title">
+					<input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title">
 					<button ng-click="addTask(task)">Add</button>
 				</div> <!-- end TasksControl -->
 				<button ng-click="deleteList(list.objectId, $index)">Delete</button>
