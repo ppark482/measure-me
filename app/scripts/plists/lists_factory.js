@@ -12,7 +12,7 @@
 
 				var addList = function (list) {
 					console.log('clicked');
-					var currentProject = ProjectFactory.getSingle();
+					var currentProject = $cookieStore.get('currentProject');
 					console.log(currentProject);
 					list.projectId = currentProject.objectId
 					var user = $cookieStore.get('currentUser');

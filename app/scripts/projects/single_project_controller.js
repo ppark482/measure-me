@@ -5,9 +5,10 @@
 				'$http', 'ListsFactory',
 			function($scope, $cookieStore, ProjectFactory, $location, $routeParams, $http, ListsFactory) {
 
-				$scope.project = ProjectFactory.getSingle();
+				$scope.project = $cookieStore.get('currentProject');
 
 				$scope.consoleReturn = function () {
+					$cookieStore.remove('currentProject');
 					ProjectFactory.consoleReturn();
 				};
 

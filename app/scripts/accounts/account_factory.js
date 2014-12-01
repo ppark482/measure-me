@@ -12,7 +12,6 @@
 					$http.post(usersUrl, user, PARSE_HEADERS)
 						.success( function () {
 							login(user);
-							// $location.path('/myconsole');
 						} // end success
 					); // end post
 				}; // end register

@@ -17,7 +17,7 @@
 					}); // end success
 
 				$scope.clickProject = function (project) {
-					ProjectFactory.setSingle(project);
+					$cookieStore.put('currentProject', project);
 					$location.path('/project/' + project.objectId);
 				}; // end clickProject
 

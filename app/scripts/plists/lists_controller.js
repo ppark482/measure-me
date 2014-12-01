@@ -10,7 +10,7 @@
 					// look through all projects for user specific projects
 					// allow controller to pass data to template
 					.success(function(results) {
-						var currentProject = ProjectFactory.getSingle();
+						var currentProject = $cookieStore.get('currentProject');
 						var results = results.results;
 						$scope.lists = _.where(results, {
 							projectId: currentProject.objectId
