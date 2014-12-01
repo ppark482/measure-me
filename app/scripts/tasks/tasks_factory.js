@@ -7,13 +7,16 @@
 				var taskURL = 'https://api.parse.com/1/classes/Tasks/';
 
 				var getTasks = function () {
-
+					var currentUser = $cookieStore.get('currentUser');
+					console.log(currentUser.objectId);
+					var query = '?'+'where={"userId":"'+currentUser.objectId+'"}';
+          return $http.get(taskURL + query, PARSE_HEADERS);
 				};
 
 				var addTask = function (task) {
 					var currentList = $cookieStore.get('currentList');
 					var currentProject = $cookieStore.get('currentProject');
-					var user = $cookieStore.get('user');
+					var user = $cookieStore.get('currentUser');
 					var userId = {};
 					userId[user.objectId] = {
 					  'read': true,
@@ -29,6 +32,11 @@
 							$rootScope.$broadcast('newTask:added');
 						});
 
+				}; // end addTask
+
+				return {
+					getTasks: getTasks,
+					addTask: addTask
 				};
 
 			} // end function
