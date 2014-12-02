@@ -40,6 +40,7 @@
 						$scope.lists.splice(index, 1);
 					});
 				}; // end deleteList
+
 			} // end function
 		]); // end controller
 }()); // end iif

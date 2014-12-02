@@ -8,7 +8,6 @@
 
 				var getTasks = function () {
 					var currentUser = $cookieStore.get('currentUser');
-					console.log(currentUser.objectId);
 					var query = '?'+'where={"userId":"'+currentUser.objectId+'"}';
           return $http.get(taskURL + query, PARSE_HEADERS);
 				};
@@ -34,9 +33,43 @@
 
 				}; // end addTask
 
+				var taskSum = function (task) {
+					// dynamically sum up user inputs
+					// for individual tasks to display
+					// next to list titles
+					var total = 0;
+					angular.forEach(task, function (item) {
+						total += parseInt(item.value);
+					});
+					return total;
+				}; // end task Sum
+
+				var listId;
+				var setListId = function (id) {
+					listId = id;
+				};
+
+				var setTimes = function (task) {
+					// dynamically sum up user inputs
+					// for individual tasks to display
+					// next to list titles
+					// console.log(listId);
+					// console.log(task);
+					var listTasks = _.where(task, {listId : listId});
+					console.log(listTasks)
+					var total = 0;
+					angular.forEach(listTasks, function (item) {
+						total += parseInt(item.value);
+					});
+					console.log(total);
+				}; // end task Sum
+
 				return {
 					getTasks: getTasks,
-					addTask: addTask
+					addTask: addTask,
+					taskSum: taskSum,
+					setListId: setListId,
+					setTimes: setTimes
 				};
 
 			} // end function

@@ -18,6 +18,16 @@
 					TasksFactory.addTask(task);
 				};
 
+				$scope.taskSum = function (task) {
+					TasksFactory.taskSum(task);
+				};
+
+				$scope.setTimes = function (tasks) {
+					var listId = $('.targetButton').get($index).id;
+					TasksFactory.setListId(listId);
+					TasksFactory.setTimes(tasks);
+				};
+
 			} // end function
 		]); // end controller
 

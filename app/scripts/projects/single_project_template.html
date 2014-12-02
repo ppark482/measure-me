@@ -6,17 +6,26 @@
 		<li>Project was created at {{ project.createdAt }}</li>
 		<li>Expected number of total hours to completion: <span class="hours">{{ project.hours }}</span></li>
 	</ul>
-	<bars-chart chart-data="40,100,80,15,25,60,10" ></bars-chart>
+	<div ng-controller="ProjectChartsControl">
+
+    <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
+
+  </div>
 </div>
 <div ng-controller="ListsControl">
 	<ul id="newListTarget"></ul>
 	<div>
 	<h4>Lists:</h4>
 		<ul class="projectWrapper">
-			<li id="list.objectId" ng-repeat="list in lists" class="projectCard block" ng-click="clickList(list)">{{ list.title }}
-				<div ng-controller="TasksControl">
+			<li id="{{list.objectId}}" ng-repeat="list in lists" class="projectCard block" ng-click="clickList(list)">
+				{{ list.title }} : 
+				<div ng-controller="TasksControl"><span id="totalTarget"></span>
 					<ul>
-						<li ng-repeat="task in tasks | filter: { listId: list.objectId }">{{ task.title }}</li>
+						<li ng-repeat="task in tasks | filter: { listId: list.objectId }">
+							{{ task.title }} :
+							<input class="lineTime" type="text" ng-model="task.value" placeholder="time"> 
+						</li>
+						<button class="targetButton" id="{{ list.objectId }}" ng-click="setTimes(tasks)">Set Times</button>
 					</ul>
 					<input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title">
 					<button ng-click="addTask(task)">Add</button>
