@@ -1,0 +1,22 @@
+.listCard {
+  width: 100%;
+  display: block;
+}
+
+.lineTime[type="text"] {
+  width: 30%;
+  margin: 0;
+  display: inline-block;
+}
+
+.projectWrapper {
+  @include outer-container;
+}
+
+#taskCharts {
+	@include span-columns(6);
+}
+
+#taskLists {
+	@include span-columns(6);
+}

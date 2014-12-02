@@ -4,7 +4,7 @@
 		factory('ChartFactory', ['$rootScope', 
 			function ($rootScope){
 
-				var data = {};
+				var data;
 				var options = {
 					///Boolean - Whether grid lines are shown across the chart
 			    scaleShowGridLines : true,

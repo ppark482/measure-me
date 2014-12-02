@@ -2,6 +2,7 @@
 @import '../../bower_components/bourbon/dist/bourbon';
 @import '../../bower_components/neat/app/assets/stylesheets/neat';
 @import 'd3styles';
+@import 'singleProjectStyles';
 
 // Custom Styles
 body {
@@ -12,7 +13,7 @@ body {
 
 .container {
   margin: 50px auto 0 auto;
-  width: 800px;
+  width: 1000px;
   font-size: 18px;
   font-weight: 200;
   line-height: 30px;
@@ -33,7 +34,7 @@ body {
   @include outer-container;
 }
 
-li.block {
+.block {
   @include span-columns(4);
   @include omega(3n);
 }
@@ -47,14 +48,7 @@ li.block {
   height: 100%;
   margin-bottom: 15px;
 }
-
 .hours {
   color: #D33F2A;
   font-size: 30px;
-}
-
-.lineTime[type="text"] {
-  width: 30%;
-  margin: 0;
-  display: inline-block;
 }

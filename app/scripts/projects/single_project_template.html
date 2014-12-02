@@ -13,27 +13,41 @@
   </div>
 </div>
 <div ng-controller="ListsControl">
-	<ul id="newListTarget"></ul>
 	<div> <!-- 1 -->
 		<h4>Lists:</h4>
 		<ul class="projectWrapper">
-			<li id="{{list.objectId}}" ng-repeat="list in lists" class="projectCard block" ng-click="clickList(list)">
+			<li id="{{list.objectId}}" ng-repeat="list in lists" class="projectCard listCard" ng-click="clickList(list)">
 				{{ list.title }} : 
-				<div ng-controller="TasksControl"><span id="totalTarget">{{ totalTime }}</span>
-					<ul>
+
+
+				<div class="projectWrapper" ng-controller="TasksControl"><span id="totalTarget">{{ totalTime }}</span>
+
+					<ul id="taskLists">
 						<li ng-repeat="task in tasks | filter: { listId: list.objectId }">
 							{{ task.title }} :
 							<input class="lineTime" type="text" ng-model="task.value" placeholder="time"> 
 						</li>
-						<button data-ng-click="setTimes(tasks, list.objectId)">Set Times</button>
+						<button class="tiny" data-ng-click="setTimes(tasks, list.objectId)">Set Times</button>
 					</ul>
+
+
 					<input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title">
-					<button ng-click="addTask(task)">Add</button>
+					<button class="tiny" ng-click="addTask(task)">Add</button>
+
+					<div id="taskCharts" ng-controller="TaskChartControl">
+						<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
+						<form ng-submit="dailyUpdate">
+							<input type="text" placeholder="M" ng-model="list.mon">
+							<input type="text" placeholder="T" ng-model="list.tue">
+							<input type="text" placeholder="W" ng-model="list.wed">
+							<input type="text" placeholder="TH" ng-model="list.thur">
+							<input type="text" placeholder="F" ng-model="list.fri">
+						</form>
+					</div>
 				</div> <!-- end TasksControl -->
-				<button ng-click="deleteList(list.objectId, $index)">Delete</button>
-					<div ng-controller="TaskChartControl">
-		<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
-	</div>
+
+
+					<button class="tiny" ng-click="deleteList(list.objectId, $index)">Delete List</button>
 			</li> <!-- end list in lists -->
 			<input class="toBeCleared" type="text" placeholder="Add New List" ng-model="list.title">
 			<button ng-click="addList(list)">New List</button>

@@ -62,8 +62,13 @@
 						}
 						total += parseInt(item.value);
 					});
+					$rootScope.$broadcast('setTimes:set');
 					return total;
 				}; // end task Sum
+
+				var getTotal = function () {
+					return total;
+				};
 
 				var updateListTimes = function (tasks, btnId) {
 					var user = $cookieStore.get('currentUser');
@@ -85,7 +90,8 @@
 					addTask: addTask,
 					taskSum: taskSum,
 					setListId: setListId,
-					setTimes: setTimes
+					setTimes: setTimes,
+					getTotal: getTotal
 				};
 
 			} // end function
