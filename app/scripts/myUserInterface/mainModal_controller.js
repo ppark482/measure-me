@@ -38,8 +38,9 @@
 			$scope.addProject = function (project) {
 				// to ProjectFactory
 				ProjectFactory.addProject(project);
-				$rootScope.$on('project:added', function () {
-					$modalInstance.close();
+				$modalInstance.close();
+				$rootScope.$broadcast('project:added', function () {
+					
 				});
 			}; // end addProject
 

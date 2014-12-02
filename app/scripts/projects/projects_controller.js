@@ -1,8 +1,19 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ProjectsControl', ['$scope', '$cookieStore', 'ProjectFactory', '$location',
-			function($scope, $cookieStore, ProjectFactory, $location){
+		.controller('ProjectsControl', ['$scope', '$rootScope', '$cookieStore', 'ProjectFactory', '$location',
+			function($scope, $rootScope, $cookieStore, ProjectFactory, $location){
+
+				$rootScope.$on('project:added', function () {
+					ProjectFactory.getProjects()
+					.success(function(results) {
+						var user = $cookieStore.get('currentUser');
+						var results = results.results;
+						$scope.projects = _.where(results, {
+							userId: user.objectId
+						});
+					}); // end success
+				}); // end on
 
 				ProjectFactory.getProjects()
 					// after getting all projects from server

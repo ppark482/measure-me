@@ -1,0 +1,31 @@
+.chart {
+		border: 1px solid black;
+	}
+	.chart div {
+		font: 10px sans-serif;
+		background-color: steelblue;
+		text-align: right;
+		padding: 3px;
+		margin: 1px;
+		color: white;
+	}
+	.chart rect {
+		stroke: white;
+		fill: steelblue;
+	}
+	.axis path,
+	.axis line {
+	  	fill: none;
+	  	stroke: #000;
+	  	shape-rendering: crispEdges;
+	}
+	.line {
+		fill: none;
+	  	stroke-width: 1.5px;
+	}
+	.line.ideal {
+	  	stroke: steelblue;
+	}
+	.line.actual {
+		stroke: orange;
+	}

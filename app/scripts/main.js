@@ -31,6 +31,6 @@
 				controller: 'SingleProjectControl',
 			}); // end route
 
-		}); // end config
+		}) // end config
 
 }()); // end iif

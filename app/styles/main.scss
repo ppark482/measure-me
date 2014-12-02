@@ -1,6 +1,7 @@
  // Bourbon & Neat
 @import '../../bower_components/bourbon/dist/bourbon';
 @import '../../bower_components/neat/app/assets/stylesheets/neat';
+@import 'd3styles';
 
 // Custom Styles
 body {
@@ -33,8 +34,8 @@ body {
 }
 
 li.block {
-  @include span-columns(3);
-  @include omega(4n);
+  @include span-columns(4);
+  @include omega(3n);
 }
 
 .projectCard {
@@ -43,6 +44,11 @@ li.block {
   padding: 15px;
   cursor: pointer;
   display: inline-block;
-  height: 180px;
+  height: 100%;
   margin-bottom: 15px;
+}
+
+.hours {
+  color: #D33F2A;
+  font-size: 30px;
 }
