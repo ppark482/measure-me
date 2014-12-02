@@ -1,8 +1,14 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ProjectChartsControl', ['$scope', 'ChartFactory',
-			function ($scope, ChartFactory) {
+		.controller('ProjectChartsControl', ['$scope', 'ChartFactory', '$cookieStore',
+			function ($scope, ChartFactory, $cookieStore) {
+
+				var burnDownData = [];
+				var project = $cookieStore.get('currentProject');
+				var total = project.hours;
+				burnDownData.length = 0;
+				
 
 				$scope.data = {
     			labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",],

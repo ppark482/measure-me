@@ -27,7 +27,11 @@
 					// allows for the sum of the task times
 					// to be injected into DOM
 					$scope.totalTime = TasksFactory.setTimes(tasks);
-					// TasksFactory.updateListTimes(tasks, btnId);
+					TasksFactory.updateListTimes(tasks, btnId);
+				};
+
+				$scope.dailyUpdate = function (list) {
+					TasksFactory.dailyUpdate(list);
 				};
 
 			} // end function

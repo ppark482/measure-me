@@ -6,11 +6,11 @@
 		<li>Project was created at {{ project.createdAt }}</li>
 		<li>Expected number of total hours to completion: <span class="hours">{{ project.hours }}</span></li>
 	</ul>
-	<div ng-controller="ProjectChartsControl">
+</div>
+<div id="projectChartDisplay" ng-controller="ProjectChartsControl">
 
-    <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
+  <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="500" height="300"></canvas>
 
-  </div>
 </div>
 <div ng-controller="ListsControl">
 	<div> <!-- 1 -->
@@ -36,12 +36,13 @@
 
 					<div id="taskCharts" ng-controller="TaskChartControl">
 						<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
-						<form ng-submit="dailyUpdate">
+						<form ng-submit="dailyUpdate(list)">
 							<input type="text" placeholder="M" ng-model="list.mon">
 							<input type="text" placeholder="T" ng-model="list.tue">
 							<input type="text" placeholder="W" ng-model="list.wed">
 							<input type="text" placeholder="TH" ng-model="list.thur">
 							<input type="text" placeholder="F" ng-model="list.fri">
+							<button>Update</button>
 						</form>
 					</div>
 				</div> <!-- end TasksControl -->
