@@ -48,21 +48,37 @@
 				var setListId = function (id) {
 					listId = id;
 				};
-
+				var total;
 				var setTimes = function (task) {
 					// dynamically sum up user inputs
 					// for individual tasks to display
 					// next to list titles
-					// console.log(listId);
-					// console.log(task);
 					var listTasks = _.where(task, {listId : listId});
 					console.log(listTasks)
-					var total = 0;
+					total = 0;
 					angular.forEach(listTasks, function (item) {
+						if (item.value === undefined) {
+							item.value = 0;
+						}
 						total += parseInt(item.value);
 					});
-					console.log(total);
+					return total;
 				}; // end task Sum
+
+				var updateListTimes = function (tasks, btnId) {
+					var user = $cookieStore.get('currentUser');
+					PARSE_HEADERS = {
+        		headers : {
+          		'X-Parse-Application-Id': 'em1a4NnNesYbYgROEEOsuSpGbGuFkzazhHpyccNH',
+			        'X-Parse-REST-API-Key': 'iLZI2A5USKe6XqNUhWNdHXSYJQApRNim3HpmA8YY',
+          		'X-Parse-Session-Token' : user.sessionToken,
+          		'Content-Type': 'application/json'
+        		} // end headers
+        	}; // end PARSE_HEADERS
+        	// need to batch updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        	var params = 
+        	$http.put('https://api.parse.com/1/batch' + params, PARSE_HEADERS);
+				}; // end update list times
 
 				return {
 					getTasks: getTasks,

@@ -22,10 +22,12 @@
 					TasksFactory.taskSum(task);
 				};
 
-				$scope.setTimes = function (tasks) {
-					var listId = $('.targetButton').get($index).id;
-					TasksFactory.setListId(listId);
-					TasksFactory.setTimes(tasks);
+				$scope.setTimes = function (tasks, btnId) {
+					TasksFactory.setListId(btnId);
+					// allows for the sum of the task times
+					// to be injected into DOM
+					$scope.totalTime = TasksFactory.setTimes(tasks);
+					TasksFactory.updateListTimes(tasks, btnId);
 				};
 
 			} // end function
