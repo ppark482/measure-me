@@ -33,4 +33,15 @@
 
 		}) // end config
 
+		.directive('stopEvent', function () {
+	    return {
+	        restrict: 'A',
+	        link: function (scope, element, attr) {
+	            element.bind('click', function (e) {
+	                e.stopPropagation();
+	            });
+	        } // end link
+	    }; // end return
+ 		}); // end directive
+
 }()); // end iif

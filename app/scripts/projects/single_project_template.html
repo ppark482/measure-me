@@ -26,17 +26,19 @@
 									<ul id="taskLists">
 										<li ng-repeat="task in tasks | filter: { listId: list.objectId }">
 											<span class="listColumn1">{{ task.title }} :</span>
-											<input class="lineTime listColumn2" type="text" ng-model="task.value" placeholder="time"> 
+											<form ng-submit="setTimes(tasks)" stop-event>
+												<input class="lineTime listColumn2" type="text" ng-model="task.value" placeholder="time"> 
+											</form>
 										</li>
-										<button class="tiny" data-ng-click="setTimes(tasks, list.objectId)">Set Times</button>
+										<button class="tiny">Set Times</button>
 									</ul>
 									<input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title">
-									<button class="tiny" ng-click="addTask(task)">Add</button>
+									<button class="tiny" ng-click="addTask(task)" stop-event>Add</button>
 								</div>
 
 								<div class="listColumn2" id="taskCharts" ng-controller="TaskChartControl">
 									<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
-									<form ng-submit="dailyUpdate(list)">
+									<form ng-submit="dailyUpdate(list)" stop-event>
 										<input type="text" placeholder="M" ng-model="list.mon">
 										<input type="text" placeholder="T" ng-model="list.tue">
 										<input type="text" placeholder="W" ng-model="list.wed">
@@ -46,7 +48,7 @@
 									</form>
 								</div>
 							</div> <!-- end TasksControl -->
-							<button class="tiny" ng-click="deleteList(list.objectId, $index)">Delete List</button>
+							<button class="tiny" ng-click="deleteList(list.objectId, $index)" stop-event>Delete List</button>
 						</li> <!-- end list in lists -->
 					</ul> <!-- end projectWrapper -->
 				</accordion-group>
