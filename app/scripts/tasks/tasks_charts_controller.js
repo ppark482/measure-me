@@ -29,15 +29,28 @@
 					var thur = (wed - list.thur);
 					var fri = (thur - list.fri);
 					userInputData.push.apply(userInputData, [mon, tue, wed, thur, fri]);
-					console.log(userInputData);
 				};
 
 				$rootScope.$on('dailyUpdate:ran', function () {
 					DailyInputFactory.getDailyData();
 					var list = $cookieStore.get('currentList');
-					DailyInputFactory.dailyUpdate(list);
+					// DailyInputFactory.dailyUpdate(list);
 					updateBurndown();
 				});
+
+				$rootScope.$on('list:clicked', function () {
+					DailyInputFactory.getDailyData();
+					var list = $cookieStore.get('currentList');
+					// DailyInputFactory.dailyUpdate(list);
+					updateBurndown();
+				});
+
+				// Pull down daily data and 
+				// Update burn down chart
+				// on page load
+				// DailyInputFactory.getDailyData();
+				// DailyInputFactory.dailyUpdate();
+				// updateBurndown();
 
 				$scope.data = {
 					labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],

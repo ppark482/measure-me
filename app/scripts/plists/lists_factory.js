@@ -11,9 +11,7 @@
 				}; // end get lists
 
 				var addList = function (list) {
-					console.log('clicked');
 					var currentProject = $cookieStore.get('currentProject');
-					console.log(currentProject);
 					list.projectId = currentProject.objectId
 					var user = $cookieStore.get('currentUser');
 					var userId = {};
@@ -35,6 +33,7 @@
 				var clickList = function (list) {
 					$cookieStore.remove('currentList');
 					$cookieStore.put('currentList', list);
+					console.log($cookieStore.get('currentList', list));
 				}; // end clickList
 
 				var deleteList = function (id) {
