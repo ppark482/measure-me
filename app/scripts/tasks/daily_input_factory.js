@@ -25,9 +25,15 @@
         	}; // end PARSE_HEADERS
         	var id = list.objectId;
         	var values = {'mon' : list.mon, 'tue' : list.tue, 'wed' : list.wed, 'thur' : list.thur, 'fri' : list.fri, };
-					$http.put(listURL + id, values, PARSE_HEADERS);
-					$rootScope.$broadcast('dailyUpdate:ran');
-				};			
+        	$cookieStore.remove('currentList');
+        	// need to update the cookie storage sometime
+        	// before issuing broadcast
+        	$cookieStore.put('currentList', list);
+					return $http.put(listURL + id, values, PARSE_HEADERS)
+						.success(function () {
+							$rootScope.$broadcast('dailyUpdate:ran');
+						}); // end success
+				}; // end daily update			
 
 				return {
 					getDailyData: getDailyData,
