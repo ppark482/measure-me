@@ -14,7 +14,6 @@
 				};
 
 				var dailyUpdate = function (list) {
-					// var list = $cookieStore.get('currentList');
 					var user = $cookieStore.get('currentUser');
 					PARSE_HEADERS = {
         		headers : {

@@ -23,34 +23,54 @@
 					var list = $cookieStore.get('currentList');
 					var taskTotal = $cookieStore.get('currentListTaskTotal');
 					userInputData.length = 0;
-					var mon = (taskTotal - list.mon);
-					var tue = (mon - list.tue);
-					var wed = (tue - list.wed);
-					var thur = (wed - list.thur);
-					var fri = (thur - list.fri);
+					var mon;
+					if (list.mon === NaN || list.mon === undefined || list.mon === '') {
+						mon = 0;
+						} else {
+							mon = (taskTotal - list.mon);
+						}
+					var tue;
+					if (list.tue === NaN || list.tue === undefined || list.tue === '') {
+						tue = 0;
+						} else {
+							tue = (mon - list.tue);
+						}
+					var wed;
+					if (list.wed === NaN || list.wed === undefined || list.wed === '') {
+						wed = 0;
+						} else {
+							wed = (tue - list.wed);
+						}
+					var thur;
+					if (list.thur === NaN || list.thur === undefined || list.thur === '') {
+						thur = 0;
+						} else {
+							thur = (wed - list.thur);
+						}
+					var fri;
+					if (list.fri === NaN || list.fri === undefined || list.fri === '') {
+						fri = 0;
+						} else {
+							fri = (thur - list.fri);
+						}
 					userInputData.push.apply(userInputData, [mon, tue, wed, thur, fri]);
 				};
 
 				$rootScope.$on('dailyUpdate:ran', function () {
-					DailyInputFactory.getDailyData();
 					var list = $cookieStore.get('currentList');
+					DailyInputFactory.getDailyData().success(function () {
+						updateBurndown();
+					});
 					// DailyInputFactory.dailyUpdate(list);
-					updateBurndown();
 				});
 
 				$rootScope.$on('list:clicked', function () {
-					DailyInputFactory.getDailyData();
 					var list = $cookieStore.get('currentList');
+					DailyInputFactory.getDailyData().success(function () {
+						updateBurndown();
+					});
 					// DailyInputFactory.dailyUpdate(list);
-					updateBurndown();
 				});
-
-				// Pull down daily data and 
-				// Update burn down chart
-				// on page load
-				// DailyInputFactory.getDailyData();
-				// DailyInputFactory.dailyUpdate();
-				// updateBurndown();
 
 				$scope.data = {
 					labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],

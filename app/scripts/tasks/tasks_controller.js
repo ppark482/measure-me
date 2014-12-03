@@ -7,6 +7,7 @@
 				var broadcastCalls = function () {
 					TasksFactory.getTasks().success( function (data) {
 						$scope.tasks = data.results;
+						console.log(data.results);
 						TasksFactory.setTimes(data.results);
 					});
 				};
