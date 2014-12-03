@@ -71,7 +71,6 @@
 				}; // end getTotal
 
 				var updateListTimes = function (tasks, btnId) { // after setting task times, update to server
-					console.log(tasks);
 					var batchRequests = [];
 					_.each(tasks, function (x) {
 						batchRequests.push(

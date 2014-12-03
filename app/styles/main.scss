@@ -5,7 +5,7 @@
 @import 'singleProjectStyles';
 
 // Custom Styles
-body {
+/*body {
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
@@ -29,11 +29,13 @@ body {
     width: 400px;
   }
 }
-
+*/
 .projectWrapper {
   @include outer-container;
 }
-
+li {
+  list-style-type: none;
+}
 .block {
   @include span-columns(4);
   @include omega(3n);

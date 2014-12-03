@@ -17,10 +17,17 @@
   @include outer-container;
 }
 
+.listColumn1, .listColumn2 {
+	@include span-columns(6);
+}
+
 #taskCharts {
 	@include span-columns(6);
 }
 
 #taskLists {
 	@include span-columns(6);
+	span {
+		margin-top: 5px;
+	}
 }

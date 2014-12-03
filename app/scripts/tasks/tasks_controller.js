@@ -12,6 +12,7 @@
 
 				TasksFactory.getTasks().success( function (data) {
 					$scope.tasks = data.results;
+					console.log(data.results);
 				});
 
 				$scope.addTask = function (task) {

@@ -13,45 +13,49 @@
 
 </div>
 <div ng-controller="ListsControl">
-	<div> <!-- 1 -->
+	<div class="projectWrapper"> <!-- 1 -->
 		<h4>Lists:</h4>
-		<ul class="projectWrapper">
-			<li id="{{list.objectId}}" ng-repeat="list in lists" class="projectCard listCard" ng-click="clickList(list)">
-				{{ list.title }} : 
+		<div ng-controller="AccordionController">
+			<accordion close-others="true">
+				<!-- ================================ REPLICATING ================================ -->
+				<accordion-group heading="{{ list.title }}" id="{{list.objectId}}" ng-repeat="list in lists" class="projectCard listCard" ng-click="clickList(list)">
+					<ul class="projectWrapper">
+						<li>
+							<div class="projectWrapper" ng-controller="TasksControl"><span id="totalTarget">{{ totalTime }}</span>
+								<div class="listColumn1">
+									<ul id="taskLists">
+										<li ng-repeat="task in tasks | filter: { listId: list.objectId }">
+											<span class="listColumn1">{{ task.title }} :</span>
+											<input class="lineTime listColumn2" type="text" ng-model="task.value" placeholder="time"> 
+										</li>
+										<button class="tiny" data-ng-click="setTimes(tasks, list.objectId)">Set Times</button>
+									</ul>
+									<input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title">
+									<button class="tiny" ng-click="addTask(task)">Add</button>
+								</div>
 
-
-				<div class="projectWrapper" ng-controller="TasksControl"><span id="totalTarget">{{ totalTime }}</span>
-
-					<ul id="taskLists">
-						<li ng-repeat="task in tasks | filter: { listId: list.objectId }">
-							{{ task.title }} :
-							<input class="lineTime" type="text" ng-model="task.value" placeholder="time"> 
-						</li>
-						<button class="tiny" data-ng-click="setTimes(tasks, list.objectId)">Set Times</button>
-					</ul>
-
-
-					<input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title">
-					<button class="tiny" ng-click="addTask(task)">Add</button>
-
-					<div id="taskCharts" ng-controller="TaskChartControl">
-						<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
-						<form ng-submit="dailyUpdate(list)">
-							<input type="text" placeholder="M" ng-model="list.mon">
-							<input type="text" placeholder="T" ng-model="list.tue">
-							<input type="text" placeholder="W" ng-model="list.wed">
-							<input type="text" placeholder="TH" ng-model="list.thur">
-							<input type="text" placeholder="F" ng-model="list.fri">
-							<button>Update</button>
-						</form>
+								<div class="listColumn2" id="taskCharts" ng-controller="TaskChartControl">
+									<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
+									<form ng-submit="dailyUpdate(list)">
+										<input type="text" placeholder="M" ng-model="list.mon">
+										<input type="text" placeholder="T" ng-model="list.tue">
+										<input type="text" placeholder="W" ng-model="list.wed">
+										<input type="text" placeholder="TH" ng-model="list.thur">
+										<input type="text" placeholder="F" ng-model="list.fri">
+										<button>Update</button>
+									</form>
+								</div>
+							</div> <!-- end TasksControl -->
+							<button class="tiny" ng-click="deleteList(list.objectId, $index)">Delete List</button>
+						</li> <!-- end list in lists -->
+					</ul> <!-- end projectWrapper -->
+				</accordion-group>
+				<!-- ================================ REPLICATING ================================ -->
+			</accordion>
+		</div> <!-- end accordion controller -->
+		<div class="addNewList">
+						<input class="toBeCleared" type="text" placeholder="Add New List" ng-model="list.title">
+						<button ng-click="addList(list)">New List</button>
 					</div>
-				</div> <!-- end TasksControl -->
-
-
-					<button class="tiny" ng-click="deleteList(list.objectId, $index)">Delete List</button>
-			</li> <!-- end list in lists -->
-			<input class="toBeCleared" type="text" placeholder="Add New List" ng-model="list.title">
-			<button ng-click="addList(list)">New List</button>
-		</ul> <!-- end projectWrapper -->
 	</div> <!-- 1 -->
 </div> <!-- end ListsControl -->
