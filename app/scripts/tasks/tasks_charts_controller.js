@@ -1,8 +1,8 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('TaskChartControl', ['$scope', '$rootScope', 'ChartFactory', 'TasksFactory',
-			function ($scope, $rootScope, ChartFactory, TasksFactory) {
+		.controller('TaskChartControl', ['$scope', '$rootScope', 'ChartFactory', 'TasksFactory', 'DailyInputFactory', '$cookieStore',
+			function ($scope, $rootScope, ChartFactory, TasksFactory, DailyInputFactory, $cookieStore) {
 
 				var burnDownData = [];
 				$rootScope.$on('setTimes:set', function () {
@@ -13,12 +13,31 @@
 					burnDownData.length = 0;
 					var a = (total - (total/4));
 					var b = a - (total/4);
-					var c = b - (total/4)
+					var c = b - (total/4);
 					burnDownData.push.apply(burnDownData, [total, a, b, c, 0]);
 					// console.log(burnDownData);
 				});
 
 				var userInputData = [];
+				var updateBurndown = function () {
+					var list = $cookieStore.get('currentList');
+					var taskTotal = $cookieStore.get('currentListTaskTotal');
+					userInputData.length = 0;
+					var mon = (taskTotal - list.mon);
+					var tue = (mon - list.tue);
+					var wed = (tue - list.wed);
+					var thur = (wed - list.thur);
+					var fri = (thur - list.fri);
+					userInputData.push.apply(userInputData, [mon, tue, wed, thur, fri]);
+					console.log(userInputData);
+				};
+
+				$rootScope.$on('dailyUpdate:ran', function () {
+					DailyInputFactory.getDailyData();
+					var list = $cookieStore.get('currentList');
+					DailyInputFactory.dailyUpdate(list);
+					updateBurndown();
+				});
 
 				$scope.data = {
 					labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
@@ -47,6 +66,10 @@
 				}; // end scope data
 
 				$scope.options = ChartFactory.getOptions();
+
+				$scope.dailyUpdate = function (list) {
+					DailyInputFactory.dailyUpdate(list);
+				}; // end dailyUpdate
 			} // end function
 		]); // end controller
 

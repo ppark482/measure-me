@@ -61,6 +61,7 @@
 						total += parseInt(item.value);
 					});
 					return total;
+					console.log(total);
 				}; // end task Sum
 
 				var listId;
@@ -78,6 +79,7 @@
 						}
 						total += parseInt(item.value);
 					});
+					$cookieStore.put('currentListTaskTotal', total);
 					$rootScope.$broadcast('setTimes:set');
 					return total;
 				}; // end task Sum

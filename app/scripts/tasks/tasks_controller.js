@@ -7,7 +7,7 @@
 				var broadcastCalls = function () {
 					TasksFactory.getTasks().success( function (data) {
 						$scope.tasks = data.results;
-						TasksFactory.setTimes($scope.tasks);
+						TasksFactory.setTimes(data.results);
 					});
 				};
 
@@ -38,14 +38,6 @@
 				$scope.taskSum = function (task) {
 					TasksFactory.taskSum(task);
 				};
-
-				// $scope.setTimes = function (tasks, btnId) {
-				// 	TasksFactory.setListId(btnId);
-				// 	// allows for the sum of the task times
-				// 	// to be injected into DOM
-				// 	$scope.totalTime = TasksFactory.setTimes(tasks);
-				// 	// TasksFactory.updateListTimes(tasks, btnId);
-				// };
 
 				$scope.updateTaskTimes = function (tasks) {
 					TasksFactory.updateListTimes(tasks);
