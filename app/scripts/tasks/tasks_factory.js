@@ -34,6 +34,24 @@
 
 				}; // end addTask
 
+				var deleteTask = function (task) {
+					var user = $cookieStore.get('currentUser');
+					PARSE_HEADERS = {
+        		headers : {
+          		'X-Parse-Application-Id': 'em1a4NnNesYbYgROEEOsuSpGbGuFkzazhHpyccNH',
+			        'X-Parse-REST-API-Key': 'iLZI2A5USKe6XqNUhWNdHXSYJQApRNim3HpmA8YY',
+          		'X-Parse-Session-Token' : user.sessionToken,
+          		'Content-Type': 'application/json'
+        		} // end headers
+        	}; // end PARSE_HEADERS
+        	var id = task.objectId;
+        	console.log(id);
+        	return $http.delete(taskURL + id, PARSE_HEADERS)
+        		.success( function () {
+        			$rootScope.$broadcast('task:deleted');
+        		});
+				};
+
 				var taskSum = function (task) {
 					// dynamically sum up user inputs
 					// for individual tasks to display
@@ -51,10 +69,7 @@
 				};
 				var total;
 				var setTimes = function (task) {
-					// dynamically sum up user inputs
-					// for individual tasks to display
-					// next to list titles
-					console.log(task);
+					// populates existing task times
 					var currentList = $cookieStore.get('currentList');
 					total = 0;
 					angular.forEach(task, function (item) {
@@ -71,8 +86,9 @@
 					return total;
 				}; // end getTotal
 
-				var updateListTimes = function (tasks, btnId) { // after setting task times, update to server
+				var updateListTimes = function (tasks) { // after setting task times, update to server
 					var batchRequests = [];
+					console.log(tasks);
 					_.each(tasks, function (x) {
 						batchRequests.push(
 
@@ -98,8 +114,8 @@
         	var params = {
         		'requests' : batchRequests
         	};
-        	console.log(params);
         	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS);
+        	$rootScope.$broadcast('listTimes:updated');
 				}; // end update list times
 
 				var dailyUpdate = function (list) {
@@ -115,12 +131,12 @@
         	var params = list.objectId;
         	var dataUpdate = {};
         	$http.put('https://api.parse.com/1/classes/Lists/' + params, PARSE_HEADERS);
-
 				}; // end daily Update
 
 				return {
 					getTasks: getTasks,
 					addTask: addTask,
+					deleteTask: deleteTask,
 					taskSum: taskSum,
 					setListId: setListId,
 					setTimes: setTimes,

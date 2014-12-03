@@ -15,7 +15,7 @@
 					var b = a - (total/4);
 					var c = b - (total/4)
 					burnDownData.push.apply(burnDownData, [total, a, b, c, 0]);
-					console.log(burnDownData);
+					// console.log(burnDownData);
 				});
 
 				var userInputData = [];

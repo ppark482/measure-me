@@ -21,16 +21,14 @@
 				<accordion-group heading="{{ list.title }}" id="{{list.objectId}}" ng-repeat="list in lists" class="projectCard listCard" ng-click="clickList(list)">
 					<ul class="projectWrapper">
 						<li>
-							<div class="projectWrapper" ng-controller="TasksControl"><span id="totalTarget">{{ totalTime }}</span>
+							<div class="projectWrapper" ng-controller="TasksControl">
 								<div class="listColumn1">
-									<ul id="taskLists">
+									<ul id="taskLists">Tasks: <span id="totalTarget">{{ totalTime }}</span>
 										<li ng-repeat="task in tasks | filter: { listId: list.objectId }">
-											<span class="listColumn1">{{ task.title }} :</span>
-											<form ng-submit="setTimes(tasks)" stop-event>
-												<input class="lineTime listColumn2" type="text" ng-model="task.value" placeholder="time"> 
-											</form>
+											<span class="listColumn1"><a ng-click="deleteTask(task)" stop-event>[X]</a>{{ task.title }} :</span>
+											<input class="lineTime listColumn2" type="text" ng-model="task.value" placeholder="time" stop-event>
 										</li>
-										<button class="tiny">Set Times</button>
+										<button class="tiny" ng-click="updateTaskTimes(tasks)">Set Times</button>
 									</ul>
 									<input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title">
 									<button class="tiny" ng-click="addTask(task)" stop-event>Add</button>
