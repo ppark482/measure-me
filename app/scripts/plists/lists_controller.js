@@ -1,9 +1,9 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ListsControl', ['$scope', '$cookieStore', 'ListsFactory', '$rootScope',
+		.controller('ListsControl', ['$scope', '$cookieStore', 'ListsFactory', 'TasksFactory', '$rootScope',
 			'ProjectFactory', '$location', '$routeParams', '$http', 
-			function($scope, $cookieStore, ListsFactory, $rootScope, ProjectFactory, $location, $routeParams, $http) {
+			function($scope, $cookieStore, ListsFactory, TasksFactory, $rootScope, ProjectFactory, $location, $routeParams, $http) {
 
 				$rootScope.$on('newList:added', function (event, args) {
 					ListsFactory.getLists().success(function(results) {
@@ -33,6 +33,7 @@
 
 				$scope.clickList = function (list) {
 					ListsFactory.clickList(list);
+					$rootScope.$broadcast('list:clicked');
 				}; // end clickList
 
 				$scope.deleteList = function (id, index) {

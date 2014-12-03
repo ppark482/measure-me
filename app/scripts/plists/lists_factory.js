@@ -33,6 +33,7 @@
 				}; // end addlist
 
 				var clickList = function (list) {
+					$cookieStore.remove('currentList');
 					$cookieStore.put('currentList', list);
 				}; // end clickList
 

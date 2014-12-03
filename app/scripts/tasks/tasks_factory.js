@@ -8,7 +8,8 @@
 
 				var getTasks = function () {
 					var currentUser = $cookieStore.get('currentUser');
-					var query = '?'+'where={"userId":"'+currentUser.objectId+'"}';
+					var currentList = $cookieStore.get('currentList');
+					var query = '?'+'where={"listId":"'+currentList.objectId+'"}';
           return $http.get(taskURL + query, PARSE_HEADERS);
 				};
 
@@ -53,10 +54,10 @@
 					// dynamically sum up user inputs
 					// for individual tasks to display
 					// next to list titles
-					var listTasks = _.where(task, {listId : listId});
-					console.log(listTasks);
+					console.log(task);
+					var currentList = $cookieStore.get('currentList');
 					total = 0;
-					angular.forEach(listTasks, function (item) {
+					angular.forEach(task, function (item) {
 						if (item.value === undefined) {
 							item.value = 0;
 						}
