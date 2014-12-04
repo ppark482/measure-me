@@ -54,12 +54,10 @@
 							fri = (thur - list.fri);
 						}
 					userInputData.push.apply(userInputData, [mon, tue, wed, thur, fri]);
-					console.log(userInputData);
 				};
 
 				$rootScope.$on('dailyUpdate:ran', function () {
 					var list = $cookieStore.get('currentList');
-					console.log(list);
 					DailyInputFactory.getDailyData().success(function () {
 						updateBurndown();
 					});

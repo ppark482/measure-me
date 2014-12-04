@@ -7,7 +7,8 @@
 				var broadcastCalls = function () {
 					TasksFactory.getTasks().success( function (data) {
 						$scope.tasks = data.results;
-						console.log(data.results);
+						// data.results is an array of tasks that correspond
+						// to the clicked list
 						TasksFactory.setTimes(data.results);
 					});
 				};

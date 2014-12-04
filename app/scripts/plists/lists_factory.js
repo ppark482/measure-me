@@ -33,7 +33,6 @@
 				var clickList = function (list) {
 					// $cookieStore.remove('currentList');
 					$cookieStore.put('currentList', list);
-					console.log($cookieStore.get('currentList', list));
 				}; // end clickList
 
 				var deleteList = function (id) {
