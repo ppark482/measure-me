@@ -6,7 +6,6 @@
 
 				var broadcastCalls = function () {
 					TasksFactory.getTasks().success( function (data) {
-						console.log(data.results);
 						$scope.tasks = data.results;
 						$('.toBeCleared').val('');
 						// data.results is an array of tasks that correspond
@@ -56,11 +55,13 @@
 				};
 
 				$scope.goToEdit = function () {
+					$('.toBeCleared').val('');
 					$scope.timeSet = true;	
 				};
 
 				$scope.setInitialHours = function (tasks) {
 					$scope.timeSet = false;
+					$('.toBeCleared').trigger('input');
 					ExtendedTasksFactory.setInitialHours(tasks);
 				};
 
@@ -78,8 +79,7 @@
 						return false;
 					} else if (task.hoursLeft <= 0) {
 						return false;
-					}
-					else if (!task.hoursLeft) {
+					}	else if (!task.hoursLeft) {
 						return true;
 					} else {return false;}
 				};
@@ -90,6 +90,8 @@
 				};
 
 				$scope.submitTodaysTimes = function (tasks) {
+					$('.hoursCompletedToday').trigger('input');
+					$('.hoursCompletedToday').val('');
 					ExtendedTasksFactory.submitTodaysTimes(tasks);
 				};
 

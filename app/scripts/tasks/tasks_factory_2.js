@@ -5,18 +5,19 @@
 			function ($rootScope, $http, PARSE_HEADERS, $location, $cookieStore, TasksFactory){
 
 				var taskURL = 'https://api.parse.com/1/classes/Tasks/';
-				var historyURL = 'https://api.parse.com/1/classes/TasksHistory/'
+				var historyURL = 'https://api.parse.com/1/classes/TasksHistory/';
 
 				var setInitialHours = function (tasks) {
 					var batchRequests = [];
 					_.each(tasks, function (x) {
-						var initialHours = parseInt(x.initialHours);
-						var hoursLeft = parseInt(x.hoursLeft);
+						var initialHours = x.initialHours === '' ? x.initialHours = 0 : parseInt(x.initialHours);
+						var hoursLeft = x.hoursLeft === '' ? x.hoursLeft = 0 : parseInt(x.hoursLeft);
 						if (hoursLeft <= 0) {
 							hoursLeft = hoursLeft + initialHours;
 						} else if (!hoursLeft) {
 							hoursLeft = initialHours;
 						} else {hoursLeft = hoursLeft + initialHours};
+						console.log(x);
 						batchRequests.push(
 
 							{
@@ -30,7 +31,6 @@
 
 							) // end push
 					});
-					console.log(batchRequests);
 					var user = $cookieStore.get('currentUser');
 					PARSE_HEADERS = {
         		headers : {
@@ -43,10 +43,8 @@
         	var params = {
         		'requests' : batchRequests
         	};
-        	console.log(params);
         	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS).success( function(data) {
-        		console.log(data);
-        		// $rootScope.$broadcast('listTimes:updated');	
+        		$rootScope.$broadcast('listTimes:updated');	
         	});
 				}; // end set initial hours
 
@@ -62,9 +60,9 @@
 						var hoursToday = x.hoursToday ? parseInt(x.hoursToday) : x.hoursToday = 0;
 						if (hoursLeft <= 0) {
 							hoursLeft = 0;
-						} else if (!hoursLeft) {
+							} else if (!hoursLeft) {
 							hoursLeft = initialHours;
-						} else {hoursLeft = hoursLeft - hoursToday};
+							} else {hoursLeft = hoursLeft - hoursToday};
 						batchRequests.push(
 
 							{
@@ -82,7 +80,7 @@
 							} // end object
 
 						) // end push
-					});
+					}); // end each
 					PARSE_HEADERS = {
         		headers : {
           		'X-Parse-Application-Id': 'em1a4NnNesYbYgROEEOsuSpGbGuFkzazhHpyccNH',
@@ -94,9 +92,8 @@
         	var params = {
         		'requests' : batchRequests
         	};
+        	$('.toBeCleared').val('');
         	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS).success( function (data) {
-        		console.log(data);
-        		$('.toBeCleared').val('');
         		updateCurrentTask(tasks, user, project, list, PARSE_HEADERS);	
         	});
 				}; // end submitTodaysTimes
@@ -107,7 +104,6 @@
 						var initialHours = parseInt(x.initialHours);
 						var hoursLeft = x.hoursLeft ? parseInt(x.hoursLeft): x.hoursLeft;
 						var hoursToday = x.hoursToday ? parseInt(x.hoursToday) : x.hoursToday = 0;
-						// console.log(hoursLeft);
 						if (hoursLeft <= 0) {
 							hoursLeft = 0;
 						} else if (!hoursLeft) {
@@ -131,9 +127,8 @@
 					var params = {
 						'requests' : batchRequests
 					};
+					$('.toBeCleared').val('');
 					$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS).success( function (data) {
-						console.log(data);
-						$('.toBeCleared').val('');
 						$rootScope.$broadcast('taskHours:updated');
 					});
 				}; // end updateCurrentTask

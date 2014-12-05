@@ -32,7 +32,7 @@
 												<td><button ng-click="addTask(task)" stop-event>Add</button></td></tr>
 											<tr ng-repeat="task in tasks">
 												<td>{{task.title}} <a ng-click="deleteTask(task)" stop-event>[X]</a></td>
-												<td><input type="text" placeholder="Set Hours" ng-model="task.initialHours" stop-event></td></tr>
+												<td><input class="toBeCleared" type="text" placeholder="Set Hours" ng-model="task.initialHours" stop-event></td></tr>
 											<tr>
 												<td></td>
 												<td><button ng-click="setInitialHours(tasks)" stop-event>Set Task Hours</button></td></tr>
@@ -52,7 +52,7 @@
 													<span ng-if="hoursLeftComplete(task)" style="color:green">COMPLETE</span>
 													<span ng-if="putInitialHours(task)"> {{ task.initialHours }}</span>
 												</td>
-												<td><input class="toBeCleared" type="text" placeholder="Hours Completed Today" ng-model="task.hoursToday" stop-event></td>
+												<td><input class="toBeCleared hoursCompletedToday" type="text" placeholder="Hours Completed Today" ng-model="task.hoursToday" stop-event></td>
 											</tr>
 											<tr>
 												<td></td>
