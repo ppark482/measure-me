@@ -8,6 +8,7 @@
 					TasksFactory.getTasks().success( function (data) {
 						console.log(data.results);
 						$scope.tasks = data.results;
+						$('.toBeCleared').val('');
 						// data.results is an array of tasks that correspond
 						// to the clicked list
 						// TasksFactory.setTimes(data.results);

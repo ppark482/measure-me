@@ -10,17 +10,19 @@
 				var setInitialHours = function (tasks) {
 					var batchRequests = [];
 					_.each(tasks, function (x) {
-						if (!x.hoursLeft) {
-							x.hoursLeft = x.initialHours;
-							} else {x.hoursLeft = x.hoursLeft + x.initialHours};
+						var initialHours = parseInt(x.initialHours);
+						var hoursLeft = parseInt(x.hoursLeft);
+						if (!hoursLeft) {
+							hoursLeft = initialHours;
+							} else {hoursLeft = hoursLeft + initialHours};
 						batchRequests.push(
 
 							{
 							'method': 'PUT',
 							'path'  : '/1/classes/Tasks/' + x.objectId,
 							'body'	: {
-								'initialHours': x.initialHours,
-								'hoursLeft'		: x.hoursLeft
+								'initialHours': initialHours,
+								'hoursLeft'		: hoursLeft
 							} // end body
 						} // end object
 
@@ -39,23 +41,26 @@
         	var params = {
         		'requests' : batchRequests
         	};
-        	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS).success( function() {
-        		$rootScope.$broadcast('listTimes:updated');	
+        	console.log(params);
+        	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS).success( function(data) {
+        		console.log(data);
+        		// $rootScope.$broadcast('listTimes:updated');	
         	});
 				}; // end set initial hours
 
 				var submitTodaysTimes = function (tasks) {
-					// need to update current tasks
-					// also need to post to Tasks History to track
+					// Post to Tasks History to track
 					var user = $cookieStore.get('currentUser');
 					var project = $cookieStore.get('currentProject');
 					var list = $cookieStore.get('currentList');
 					var batchRequests = [];
 					_.each(tasks, function (x) {
-						console.log(x);
-						if (!x.hoursLeft) {
-							x.hoursLeft = x.initialHours;
-						} else {x.hoursLeft = x.hoursLeft - x.hoursToday};
+						var initialHours = parseInt(x.initialHours);
+						var hoursLeft = x.hoursLeft ? parseInt(x.hoursLeft): x.hoursLeft;
+						var hoursToday = parseInt(x.hoursToday);
+						if (!hoursLeft) {
+							hoursLeft = initialHours;
+						} else {hoursLeft = hoursLeft - hoursToday};
 						batchRequests.push(
 
 							{
@@ -65,9 +70,10 @@
 								'userId' 				: user.objectId,
 								'projectId' 		: project.objectId,
 								'listId' 				: list.objectId,
-								'initialHours'	: x.initialHours,
-								'hoursToday'		: x.hoursToday,
-								'hoursLeft'			: x.hoursLeft
+								'initialHours'	: initialHours,
+								'hoursToday'		: hoursToday,
+								'hoursLeft'			: hoursLeft,
+								'title'					: x.title
 								} // end body
 							} // end object
 
@@ -84,21 +90,33 @@
         	var params = {
         		'requests' : batchRequests
         	};
-        	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS);
-        	$('.toBeCleared').val('');
-        	updateCurrentTask(tasks, user, project, list, PARSE_HEADERS);
+        	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS).success( function (data) {
+        		console.log(data);
+        		$('.toBeCleared').val('');
+        		updateCurrentTask(tasks, user, project, list, PARSE_HEADERS);	
+        	});
 				}; // end submitTodaysTimes
 
 				var updateCurrentTask = function (tasks, user, project, list, PARSE_HEADERS) {
 					var batchRequests = [];
 					_.each(tasks, function (x) {
+						var initialHours = parseInt(x.initialHours);
+						var hoursLeft = x.hoursLeft ? parseInt(x.hoursLeft): x.hoursLeft;
+						var hoursToday = parseInt(x.hoursToday);
+						// console.log(hoursLeft);
+						if (!hoursLeft) {
+							hoursLeft = initialHours;
+							} else {hoursLeft = hoursLeft - hoursToday};
+						console.log(hoursLeft);
 						batchRequests.push(
 
 							{
 							'method': 'PUT',
 							'path'  : '/1/classes/Tasks/' + x.objectId,
 							'body'	: {
-								'hoursLeft'			: x.hoursLeft
+								'initialHours'	: initialHours,
+								'hoursToday'		: hoursToday,
+								'hoursLeft'			: hoursLeft
 								} // end body
 							} // end object
 
@@ -107,8 +125,11 @@
 					var params = {
 						'requests' : batchRequests
 					};
-					$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS);
-					$rootScope.$broadcast('taskHours:updated');
+					$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS).success( function (data) {
+						console.log(data);
+						$('.toBeCleared').val('');
+						$rootScope.$broadcast('taskHours:updated');
+					});
 				}; // end updateCurrentTask
 
 				return {
