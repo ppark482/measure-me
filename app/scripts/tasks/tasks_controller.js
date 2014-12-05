@@ -10,7 +10,7 @@
 						$scope.tasks = data.results;
 						// data.results is an array of tasks that correspond
 						// to the clicked list
-						TasksFactory.setTimes(data.results);
+						// TasksFactory.setTimes(data.results);
 					});
 				};
 

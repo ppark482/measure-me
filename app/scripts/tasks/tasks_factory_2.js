@@ -9,23 +9,24 @@
 
 				var setInitialHours = function (tasks) {
 					var batchRequests = [];
-					console.log(tasks);
 					_.each(tasks, function (x) {
-						if (!x.hoursleft) {
+						if (!x.hoursLeft) {
 							x.hoursLeft = x.initialHours;
-							} else {x.hoursLeft = x.hoursLeft -= x.hoursToday};
+							} else {x.hoursLeft = x.hoursLeft + x.initialHours};
 						batchRequests.push(
 
 							{
 							'method': 'PUT',
 							'path'  : '/1/classes/Tasks/' + x.objectId,
 							'body'	: {
-								'initialHours': x.initialHours
+								'initialHours': x.initialHours,
+								'hoursLeft'		: x.hoursLeft
 							} // end body
 						} // end object
 
 							) // end push
 					});
+					console.log(batchRequests);
 					var user = $cookieStore.get('currentUser');
 					PARSE_HEADERS = {
         		headers : {
@@ -38,9 +39,9 @@
         	var params = {
         		'requests' : batchRequests
         	};
-        	console.log(params);
-        	// $http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS);
-        	$rootScope.$broadcast('listTimes:updated');
+        	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS).success( function() {
+        		$rootScope.$broadcast('listTimes:updated');	
+        	});
 				}; // end set initial hours
 
 				var submitTodaysTimes = function (tasks) {
@@ -84,7 +85,7 @@
         		'requests' : batchRequests
         	};
         	$http.post('https://api.parse.com/1/batch/', params, PARSE_HEADERS);
-        	// console.log(params);
+        	$('.toBeCleared').val('');
         	updateCurrentTask(tasks, user, project, list, PARSE_HEADERS);
 				}; // end submitTodaysTimes
 
