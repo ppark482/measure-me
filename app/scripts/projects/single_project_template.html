@@ -49,6 +49,7 @@
 												<td>{{ task.title }}</td>
 												<td>
 													<span ng-if="putHoursLeft(task)"> {{ task.hoursLeft }}</span>
+													<span ng-if="hoursLeftComplete(task)" style="color:green">COMPLETE</span>
 													<span ng-if="putInitialHours(task)"> {{ task.initialHours }}</span>
 												</td>
 												<td><input class="toBeCleared" type="text" placeholder="Hours Completed Today" ng-model="task.hoursToday" stop-event></td>

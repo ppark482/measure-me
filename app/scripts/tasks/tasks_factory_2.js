@@ -12,9 +12,11 @@
 					_.each(tasks, function (x) {
 						var initialHours = parseInt(x.initialHours);
 						var hoursLeft = parseInt(x.hoursLeft);
-						if (!hoursLeft) {
+						if (hoursLeft <= 0) {
+							hoursLeft = hoursLeft + initialHours;
+						} else if (!hoursLeft) {
 							hoursLeft = initialHours;
-							} else {hoursLeft = hoursLeft + initialHours};
+						} else {hoursLeft = hoursLeft + initialHours};
 						batchRequests.push(
 
 							{
@@ -57,8 +59,10 @@
 					_.each(tasks, function (x) {
 						var initialHours = parseInt(x.initialHours);
 						var hoursLeft = x.hoursLeft ? parseInt(x.hoursLeft): x.hoursLeft;
-						var hoursToday = parseInt(x.hoursToday);
-						if (!hoursLeft) {
+						var hoursToday = x.hoursToday ? parseInt(x.hoursToday) : x.hoursToday = 0;
+						if (hoursLeft <= 0) {
+							hoursLeft = 0;
+						} else if (!hoursLeft) {
 							hoursLeft = initialHours;
 						} else {hoursLeft = hoursLeft - hoursToday};
 						batchRequests.push(
@@ -102,11 +106,13 @@
 					_.each(tasks, function (x) {
 						var initialHours = parseInt(x.initialHours);
 						var hoursLeft = x.hoursLeft ? parseInt(x.hoursLeft): x.hoursLeft;
-						var hoursToday = parseInt(x.hoursToday);
+						var hoursToday = x.hoursToday ? parseInt(x.hoursToday) : x.hoursToday = 0;
 						// console.log(hoursLeft);
-						if (!hoursLeft) {
+						if (hoursLeft <= 0) {
+							hoursLeft = 0;
+						} else if (!hoursLeft) {
 							hoursLeft = initialHours;
-							} else {hoursLeft = hoursLeft - hoursToday};
+						} else {hoursLeft = hoursLeft - hoursToday};
 						console.log(hoursLeft);
 						batchRequests.push(
 

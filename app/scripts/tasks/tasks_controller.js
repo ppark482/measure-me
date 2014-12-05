@@ -65,18 +65,28 @@
 				};
 
 				$scope.putHoursLeft = function (task) {
-					if (task.hoursLeft === 0) {
+					if (task.hoursLeft > 0) {
 						return true;
+					} else if (task.hoursLeft <= 0) {
+						return false;
 					} else if (!task.hoursLeft) {
 						return false;
 					} else {return true;}
 				};
 				$scope.putInitialHours = function (task) {
-					if (task.hoursLeft === 0) {
+					if (task.hoursLeft > 0) {
 						return false;
-					} else if (!task.hoursLeft) {
+					} else if (task.hoursLeft <= 0) {
+						return false;
+					}
+					else if (!task.hoursLeft) {
 						return true;
 					} else {return false;}
+				};
+
+				$scope.hoursLeftComplete = function (task) {
+					if (task.hoursLeft <= 0)
+						return true;
 				};
 
 				$scope.submitTodaysTimes = function (tasks) {
