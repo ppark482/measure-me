@@ -6,11 +6,11 @@
 
 				var broadcastCalls = function () {
 					TasksFactory.getTasks().success( function (data) {
-						$scope.tasks = data.results;
-						$('.toBeCleared').val('');
-						// data.results is an array of tasks that correspond
-						// to the clicked list
-						// TasksFactory.setTimes(data.results);
+						var results = data.results;
+						_.each(results, function (x) {
+							x.hoursToday = ''
+						});
+						$scope.tasks = results;
 					});
 				};
 
