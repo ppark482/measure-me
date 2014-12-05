@@ -23,8 +23,44 @@
 						<li>
 							<div class="projectWrapper" ng-controller="TasksControl">
 								
-								<div class="listColumn1">
-									<ul id="taskLists">Tasks: <span id="totalTarget">{{ totalTime }}</span>
+								<div class="listColumn11">
+									<div id="taskLists">Tasks: <span id="totalTarget">{{ totalTime }}</span>
+										<!-- ================================ SHOW FIRST ================================ -->
+										<table ng-table class="setTasksTable" ng-show="timeSet">
+											<tr>
+												<td><input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title"></td>
+												<td><button ng-click="addTask(task)" stop-event>Add</button></td></tr>
+											<tr ng-repeat="task in tasks">
+												<td>{{task.title}} <a ng-click="deleteTask(task)" stop-event>[X]</a></td>
+												<td><input type="text" placeholder="Set Hours" ng-model="task.initialHours" stop-event></td></tr>
+											<tr>
+												<td></td>
+												<td><button ng-click="setInitialHours(tasks)" stop-event>Set Task Hours</button></td></tr>
+										</table>
+										<!-- ================================ HIDE FIRST ================================ -->
+										<table ng-table class="setTasksTable" ng-hide="timeSet">
+											<tr><button ng-click="goToEdit()" stop-event>Add/Edit Tasks</button></tr>
+											<tr>
+												<td>Task</td>
+												<td>Hours Left</td>
+												<td>Hours Completed Today</td>
+											</tr>
+											<tr ng-repeat="task in tasks">
+												<td>{{ task.title }}</td>
+												<td>
+													<span ng-if="putHoursLeft(task)"> {{ task.hoursLeft }}</span>
+													<span ng-if="putInitialHours(task)"> {{ task.initialHours }}</span>
+												</td>
+												<td><input type="text" placeholder="Hours Completed Today" ng-model="task.hoursToday" stop-event></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td></td>
+												<td><button ng-click="submitTodaysTimes(tasks)" stop-event>Submit Today's Times</button></td></tr>
+										</table>
+									</div>
+
+									<!-- <ul id="taskLists">Tasks: <span id="totalTarget">{{ totalTime }}</span>
 										<li ng-repeat="task in tasks | filter: { listId: list.objectId }">
 											<span class="listColumn1"><a ng-click="deleteTask(task)" stop-event>[X]</a>{{ task.title }} :</span>
 											<input class="lineTime listColumn2" type="text" ng-model="task.value" placeholder="time" stop-event>
@@ -46,7 +82,7 @@
 											<li>F : <input type="text" placeholder="F" ng-model="list.fri"> hours</li>
 										</ul>
 										<button stop-event>Update</button>
-									</form>
+									</form> -->
 								</div> <!-- end TaskChartControl -->
 							</div> <!-- end TasksControl -->
 

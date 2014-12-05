@@ -26,7 +26,7 @@
 }
 
 #taskLists {
-	@include span-columns(6);
+	@include span-columns(12);
 	span {
 		margin-top: 5px;
 	}
@@ -37,5 +37,15 @@
 		width: 10%;
 		text-align: center;
 		display: inline;
+	}
+}
+
+.setTasksTable {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	td {
+		padding: 0;
+		text-align: center;
 	}
 }

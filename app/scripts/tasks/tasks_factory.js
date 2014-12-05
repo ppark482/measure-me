@@ -120,22 +120,6 @@
         	$rootScope.$broadcast('listTimes:updated');
 				}; // end update list times
 
-				// var dailyUpdate = function (list) {
-				// 	var user = $cookieStore.get('currentUser');
-				// 	PARSE_HEADERS = {
-    //     		headers : {
-    //       		'X-Parse-Application-Id': 'em1a4NnNesYbYgROEEOsuSpGbGuFkzazhHpyccNH',
-			 //        'X-Parse-REST-API-Key': 'iLZI2A5USKe6XqNUhWNdHXSYJQApRNim3HpmA8YY',
-    //       		'X-Parse-Session-Token' : user.sessionToken,
-    //       		'Content-Type': 'application/json'
-    //     		} // end headers
-    //     	}; // end PARSE_HEADERS
-    //     	var params = list.objectId;
-    //     	var dataUpdate = {};
-    //     	$http.put('https://api.parse.com/1/classes/Lists/' + params, PARSE_HEADERS);
-    //     	$rootScope.$broadcast('dailyTimes:updated');
-				// }; // end daily Update
-
 				return {
 					getTasks: getTasks,
 					addTask: addTask,
@@ -144,7 +128,6 @@
 					setListId: setListId,
 					setTimes: setTimes,
 					getTotal: getTotal,
-					// dailyUpdate: dailyUpdate,
 					updateListTimes: updateListTimes
 				};
 
