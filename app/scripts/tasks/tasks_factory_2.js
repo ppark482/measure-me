@@ -17,7 +17,6 @@
 						} else if (!hoursLeft) {
 							hoursLeft = initialHours;
 						} else {hoursLeft = hoursLeft + initialHours};
-						console.log(x);
 						batchRequests.push(
 
 							{
@@ -75,7 +74,8 @@
 								'initialHours'	: initialHours,
 								'hoursToday'		: hoursToday,
 								'hoursLeft'			: hoursLeft,
-								'title'					: x.title
+								'title'					: x.title,
+								'taskId'				: x.objectId
 								} // end body
 							} // end object
 
@@ -109,7 +109,6 @@
 						} else if (!hoursLeft) {
 							hoursLeft = initialHours;
 						} else {hoursLeft = hoursLeft - hoursToday};
-						console.log(hoursLeft);
 						batchRequests.push(
 
 							{
