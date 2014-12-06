@@ -23,7 +23,7 @@
 						<li>
 							<div class="projectWrapper" ng-controller="TasksControl">
 								
-								<div class="listColumn11">
+								<div class="taskWrapper">
 									<div id="taskLists">Tasks: <span id="totalTarget">{{ totalTime }}</span>
 										<!-- ================================ SHOW FIRST ================================ -->
 										<table ng-table class="setTasksTable" ng-show="timeSet">
@@ -59,32 +59,13 @@
 												<td></td>
 												<td><button ng-click="submitTodaysTimes(tasks)" stop-event>Submit Today's Times</button></td></tr>
 										</table>
+									</div> <!-- end taskLists -->
+									<!-- ================================ TASK LIST CHART ================================ -->
+									<div ng-controller="TaskChartControl">
+										<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="400" height="300"></canvas>
 									</div>
-
-									<!-- <ul id="taskLists">Tasks: <span id="totalTarget">{{ totalTime }}</span>
-										<li ng-repeat="task in tasks | filter: { listId: list.objectId }">
-											<span class="listColumn1"><a ng-click="deleteTask(task)" stop-event>[X]</a>{{ task.title }} :</span>
-											<input class="lineTime listColumn2" type="text" ng-model="task.value" placeholder="time" stop-event>
-										</li>
-									</ul>
-									<button class="tiny" ng-click="updateTaskTimes(tasks)">Set Times</button>
-									<input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title">
-									<button class="tiny" ng-click="addTask(task)" stop-event>Add</button>
-								</div>
-
-								<div class="listColumn2" id="taskCharts" ng-controller="TaskChartControl"> {{ list.title }} Progress Overview
-									<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options"></canvas>
-									<form id="dailyUpdate" ng-submit="dailyUpdate(list)" stop-event>
-										<ul>
-											<li>M : <input type="text" placeholder="M" ng-model="list.mon"> hours</li>
-											<li>T : <input type="text" placeholder="T" ng-model="list.tue"> hours</li>
-											<li>W : <input type="text" placeholder="W" ng-model="list.wed"> hours</li>
-											<li>Th : <input type="text" placeholder="Th" ng-model="list.thur"> hours</li>
-											<li>F : <input type="text" placeholder="F" ng-model="list.fri"> hours</li>
-										</ul>
-										<button stop-event>Update</button>
-									</form> -->
-								</div> <!-- end TaskChartControl -->
+									<!-- ================================ end TASK LIST CHART ================================ -->
+								</div> <!-- end taskWrapper -->
 							</div> <!-- end TasksControl -->
 
 							<button class="tiny" ng-click="deleteList(list.objectId, $index)" stop-event>Delete List</button>

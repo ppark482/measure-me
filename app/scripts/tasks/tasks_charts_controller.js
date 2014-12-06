@@ -1,7 +1,7 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('TaskChartControl', ['$scope', '$rootScope', 'ChartFactory', 'TasksFactory', 'DailyInputFactory', '$cookieStore',
+		.controller('DefunctTaskChartControl', ['$scope', '$rootScope', 'ChartFactory', 'TasksFactory', 'DailyInputFactory', '$cookieStore',
 			function ($scope, $rootScope, ChartFactory, TasksFactory, DailyInputFactory, $cookieStore) {
 
 				var burnDownData = [];
