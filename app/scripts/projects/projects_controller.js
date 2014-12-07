@@ -31,9 +31,9 @@
 					$cookieStore.put('currentProject', project);
 					$location.path('/project/' + project.objectId);
 					ListsFactory.getProjectLists()
-					.success(function (results) {
-						ListsFactory.getListTasks(results);
-					});
+						.success(function (results) {
+							ListsFactory.getListTasks(results);
+						});
 				}; // end clickProject
 
 			} // end function

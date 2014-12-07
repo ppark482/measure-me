@@ -1,8 +1,8 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('TaskAccordionControl', ['$scope',
-			function ($scope) {
+		.controller('TaskAccordionControl', ['$scope', '$cookieStore', '$rootScope',
+			function ($scope, $cookieStore, $rootScope) {
 
 			} // end function
 		]); // end controller
