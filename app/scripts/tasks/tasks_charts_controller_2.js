@@ -6,7 +6,15 @@
 
 				var graphLabels = [];
 
+				$rootScope.$on('taskHours:updated', function () {
+					displayGraph();
+				});
+
 				$rootScope.$on('list:clicked', function () {
+					displayGraph();
+				}); // end rootScope call
+
+				var displayGraph = function () {
 					var dataLabels = [];
 					var dataSets = [];
 					graphLabels = [];
@@ -61,7 +69,7 @@
 							var y = x.toString();
 							graphLabels.push(y);
 						});
-						console.log(graphLabels);
+						// console.log(graphLabels);
 						$scope.data = {
 		    			labels: graphLabels,
 			    		datasets: dataSets
@@ -70,8 +78,8 @@
 
 
 					$scope.options = ChartFactory.getOptions(); // end scope
-				
-				}); // end rootScope call
+
+				}; // end displayGraph
 
 			} // end function
 		]); // end controller

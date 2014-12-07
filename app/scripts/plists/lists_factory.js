@@ -5,6 +5,8 @@
 			function ($rootScope, $http, PARSE_HEADERS, $location, $cookieStore, ProjectFactory) {
 
 				var listURL = 'https://api.parse.com/1/classes/Lists/';
+				var projectURL = 'https://api.parse.com/1/classes/Project/';
+				var taskURL = 'https://api.parse.com/1/classes/Tasks/';
 
 				var getLists = function () {
 					return $http.get(listURL, PARSE_HEADERS);
@@ -31,7 +33,6 @@
 				}; // end addlist
 
 				var clickList = function (list) {
-					// $cookieStore.remove('currentList');
 					$cookieStore.put('currentList', list);
 				}; // end clickList
 
@@ -45,15 +46,62 @@
           		'Content-Type': 'application/json'
         		} // end headers
         	}; // end PARSE_HEADERS
-          console.log(PARSE_HEADERS);
+          // console.log(PARSE_HEADERS);
 					return $http.delete(listURL + id, PARSE_HEADERS);
 				}; // end deleteList
+
+				var getProjectLists = function () {
+					var currentProject = $cookieStore.get('currentProject');
+					var query = '?'+'where={"projectId":"'+currentProject.objectId+'"}';
+          return $http.get(listURL + query, PARSE_HEADERS);
+				}; // end getProjectLists
+
+				var getListTasks = function (results) {
+					var lists = results.results;
+					var currentProject = $cookieStore.get('currentProject');
+					var query = '?'+'where={"projectId":"'+currentProject.objectId+'"}';
+					return $http.get(taskURL + query, PARSE_HEADERS).success( function (results) {
+						var results = results.results;
+						calculateListTaskHours(results, lists);
+					});
+				}; // end getListTasks
+
+				var calculateListTaskHours = function (results, lists) {
+					// console.log(results);
+					// console.log(lists);
+					var ListData = function (options) {
+						this.id = options.id,
+						this.totalHours = options.totalHours
+					};
+					var collection = [];
+					_.each(lists, function (x) {
+						var taskCollection = _.where(results, {listId : x.objectId});
+						var totalHoursList = [];
+						_.each(taskCollection, function (y) {
+							totalHoursList.push(y.initialHours);
+						});
+						var totalHoursSum = totalHoursList.reduce(function (x, y) {
+							return x + y;
+						});
+						var listData = new ListData ({
+							id : x.objectId,
+							totalHours: totalHoursSum
+						});
+						collection.push(listData);
+					});
+					// collection is an array of instances
+					// each instance contains the list id 
+					// and the sum of each list's task's initial hours
+					return collection;
+				}; // end calculateListTaskHours
 
 				return {
 					getLists: getLists,
 					addList: addList,
 					clickList: clickList,
-					deleteList: deleteList
+					deleteList: deleteList,
+					getProjectLists: getProjectLists,
+					getListTasks: getListTasks
 				}
 
 			} // end function
