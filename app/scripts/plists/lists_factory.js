@@ -71,27 +71,35 @@
 					// console.log(lists);
 					var ListData = function (options) {
 						this.id = options.id,
-						this.totalHours = options.totalHours
+						this.totalHours = options.totalHours,
+						this.hoursLeft = options.hoursLeft
 					};
 					var collection = [];
 					_.each(lists, function (x) {
 						var taskCollection = _.where(results, {listId : x.objectId});
 						var totalHoursList = [];
+						var totalHoursLeftList = [];
 						_.each(taskCollection, function (y) {
 							totalHoursList.push(y.initialHours);
+							totalHoursLeftList.push(y.hoursLeft);
 						});
 						var totalHoursSum = totalHoursList.reduce(function (x, y) {
 							return x + y;
 						});
+						var totalLeftSum = totalHoursLeftList.reduce(function (x, y) {
+							return x + y;
+						});
 						var listData = new ListData ({
 							id : x.objectId,
-							totalHours: totalHoursSum
+							totalHours: totalHoursSum,
+							hoursLeft: totalLeftSum
 						});
 						collection.push(listData);
 					});
 					// collection is an array of instances
 					// each instance contains the list id 
 					// and the sum of each list's task's initial hours
+					$cookieStore.remove('currentCollection');
 					$cookieStore.put('currentCollection', collection);
 				}; // end calculateListTaskHours
 

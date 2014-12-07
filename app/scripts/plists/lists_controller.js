@@ -13,7 +13,13 @@
 
 				ListsFactory.getLists()
 					.success(function(results) {
-						setLists(results);
+						ListsFactory.getProjectLists()
+							.success(function (results) {
+								ListsFactory.getListTasks(results)
+									.success( function () {
+										setLists(results);	
+									}); // end success
+							}); // end success
 					}); // end success
 
 				var setLists = function (results) {
@@ -28,9 +34,12 @@
 					});
 					var totals = $cookieStore.get('currentCollection');
 					_.each(tempLists, function (x) {
-						var match = _.where(totals, { id: x.objectId} );
-						x.totalHours = match[0].totalHours;
-					});
+						var match = _.where(totals, {
+							id: x.objectId
+						});
+						x.totalHours = match[0]['totalHours'];
+						x.hoursLeft = match[0]['hoursLeft'];
+					}); // end of each
 					$scope.lists = tempLists;
 				}; // end setLists
 
