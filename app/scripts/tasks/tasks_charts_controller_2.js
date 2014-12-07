@@ -4,13 +4,15 @@
 		.controller('TaskChartControl', ['$scope', '$rootScope', 'ChartFactory', 'ExtendedTasksFactory', '$cookieStore', 'HistoryFactory',
 			function ($scope, $rootScope, ChartFactory, ExtendedTasksFactory, $cookieStore, HistoryFactory) {
 
-				$rootScope.$on('list:clicked', function () {
+				var graphLabels = [];
 
+				$rootScope.$on('list:clicked', function () {
 					var dataLabels = [];
 					var dataSets = [];
+					graphLabels = [];
 					// create a constructor for each individual task
 					var TaskDataSet = function (options) {
-						this.label = options.label,
+						this.label = "Task",
 						this.fillColor = "rgba(220,220,220,0.2)",
 						this.strokeColor = "#009B57",
 						this.pointColor = "rgba(220,220,220,1)",
@@ -21,12 +23,11 @@
 					};
 
 					HistoryFactory.getTasks().success( function (results) {
+						var tempLabels = [];
 						var results = results.results;
 						// console.log(results);
 						var taskIds = _.pluck(results, 'taskId');
 						var unique = _.uniq(taskIds);
-						var length = unique.length;
-
 						var sameTasks = _.groupBy(results, 'taskId');
 						var pairsTasks = _.pairs(sameTasks);
 						// console.log(pairsTasks);
@@ -41,45 +42,32 @@
 									if (a.hoursLeft) {
 										data.push(a.hoursLeft);
 									}
-									// console.log(a);
+									if (a.createdAt) {
+										tempLabels.push(a.createdAt);
+									}
 								});
 							}); // end y each
 							// console.log(data);
-							console.log(dataSets);
 						}); // end x each
-
+						// console.log(dataSets);
+						var convertTime = [];
+						_.each(tempLabels, function (x) {
+							 var date = new Date(x).toLocaleString();
+							 convertTime.push(date);
+						});
+						var uniqueLabels = _.uniq(convertTime);
+						graphLabels = [];
+						_.each(uniqueLabels, function (x) {
+							var y = x.toString();
+							graphLabels.push(y);
+						});
+						console.log(graphLabels);
+						$scope.data = {
+		    			labels: graphLabels,
+			    		datasets: dataSets
+						}; // end scope data
 					}); // end get tasks
 
-										$scope.data = {
-	    			labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-		    		datasets: dataSets
-					}; // end scope data
-
-					// $scope.data = {
-	    // 			labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-		   //  		datasets: [
-		   //      {
-		   //          label: "Burn Down",
-		   //          fillColor: "rgba(220,220,220,0.2)",
-		   //          strokeColor: "#009B57",
-		   //          pointColor: "rgba(220,220,220,1)",
-		   //          pointStrokeColor: "#fff",
-		   //          pointHighlightFill: "#fff",
-		   //          pointHighlightStroke: "rgba(220,220,220,1)",
-		   //          data: [70, 63, 56, 49, 42, 35, 28, 21, 14, 7]
-		   //      },
-		   //      {
-		   //          label: "My Inputs",
-		   //          fillColor: "rgba(151,187,205,0.2)",
-		   //          strokeColor: "rgba(151,187,205,1)",
-		   //          pointColor: "rgba(151,187,205,1)",
-		   //          pointStrokeColor: "#fff",
-		   //          pointHighlightFill: "#fff",
-		   //          pointHighlightStroke: "rgba(151,187,205,1)",
-		   //          data: [60, 55, 55, 55, 40]
-		   //      }
-		   //  		]
-					// }; // end scope data
 
 					$scope.options = ChartFactory.getOptions(); // end scope
 				
