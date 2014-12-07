@@ -6,9 +6,18 @@
 
 				var burnDownData = [];
 				var project = $cookieStore.get('currentProject');
+				var currentData = $cookieStore.get('currentCollection');
 				var total = project.hours;
-				burnDownData.length = 0;
-				
+				var hoursSum;
+
+				_.each(currentData, function (x) {
+					burnDownData.push(x.totalHours);
+				});
+				hoursSum = burnDownData.reduce(function (x, y) {
+					return x + y;
+				});
+				console.log(hoursSum);
+
 
 				$scope.data = {
     			labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",],
