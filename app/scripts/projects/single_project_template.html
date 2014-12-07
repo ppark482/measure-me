@@ -18,7 +18,7 @@
 		<div ng-controller="AccordionController">
 			<accordion close-others="true">
 				<!-- ================================ REPLICATING ================================ -->
-				<accordion-group heading="{{ list.title }}" id="{{list.objectId}}" ng-repeat="list in lists" class="projectCard listCard" ng-click="clickList(list)">
+				<accordion-group heading="{{ list.title }} || how many hours left: {{ list.hoursLeft }} of {{ list.totalHours }}" id="{{ list.objectId }}" ng-repeat="list in lists" class="projectCard listCard" ng-click="clickList(list)">
 					<ul class="projectWrapper">
 						<li>
 							<div class="projectWrapper" ng-controller="TasksControl">
