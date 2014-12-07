@@ -12,6 +12,7 @@
 				$scope.consoleReturn = function () {
 					$cookieStore.remove('currentProject');
 					$cookieStore.remove('currentList');
+					$cookieStore.remove('currentCollection');
 					ProjectFactory.consoleReturn();
 				};
 

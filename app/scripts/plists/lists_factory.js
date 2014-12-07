@@ -92,7 +92,7 @@
 					// collection is an array of instances
 					// each instance contains the list id 
 					// and the sum of each list's task's initial hours
-					return collection;
+					$cookieStore.put('currentCollection', collection);
 				}; // end calculateListTaskHours
 
 				return {
