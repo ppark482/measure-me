@@ -14,8 +14,8 @@
 
   @include transition (all 0.2s ease-in-out);
   background-color: $card-background;
-  border-radius: $base-border-radius;
-  border: $card-border;
+  /*border-radius: $base-border-radius;*/
+  /*border: $card-border;*/
   margin-bottom: $base-spacing;
   cursor: pointer;
   box-shadow: 0 2px 4px darken($base-background-color, 10);
