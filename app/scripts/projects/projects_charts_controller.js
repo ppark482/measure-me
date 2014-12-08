@@ -9,34 +9,73 @@
 				var currentData = $cookieStore.get('currentCollection');
 				var total = project.hours;
 				var hoursSum;
+				var tempData = [];
 
+				// Get total hours of task inputs
 				_.each(currentData, function (x) {
-					burnDownData.push(x.totalHours);
+					tempData.push(x.totalHours);
 				});
-				hoursSum = burnDownData.reduce(function (x, y) {
+				hoursSum = tempData.reduce(function (x, y) {
 					return x + y;
 				});
+				// end total hours of task inputs
 				console.log(hoursSum);
 
+				var DataSet = function (options) {
+					this.label = options.label,
+					this.fillColor = options.fillColor,
+					this.strokeColor = options.strokeColor,
+					this.pointColor = options.pointColor,
+					this.pointStrokeColor = options.pointStrokeColor,
+					this.pointHighlightFill = options.pointHighlightFill,
+					this.pointHighlightStroke = options.pointHighlightStroke,
+          this.data = options.data
+				}; // end constructor
+
+				console.log(project);
+				// Create burn down line for project
+					// Take hoursSum (total task hours), divide by number of days (weeks * 7)
+				var totalDays = (project.weeks * 7); // Total Number of days
+				var dailyReq = Math.ceil(hoursSum/totalDays); // Number of hours needed per day
+				burnDownData.push(hoursSum); // Set first value of dataset to total hours
+				for (var i = 0; i < totalDays; i++) {
+				  burnDownData.push(hoursSum -= dailyReq); // push linear values into burndown array
+				};
+				for (var i = 0; i < burnDownData.length; i++) {
+					if (burnDownData[i] <= 0) { // if there is a negative number, set equal to 0
+						burnDownData [i] = 0;
+					}
+				};
+				console.log(burnDownData);
+				// burndown line for project
+				var projectBurnDown = new DataSet ({
+					label : 'Burn Down',
+					fillColor : 'RGBA(21, 106, 235, .2)',
+          strokeColor : "#009B57",
+          pointColor : 'RGBA(21, 106, 235, 1)',
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#71A8A2",
+          pointHighlightStroke : "#71A8A2",
+					data : burnDownData
+				}); // end of projectBurnDown
+
+				console.log(currentData);
+
+				var projectLabels = [];
+				for (var i = 1; i < (totalDays + 1); i++) {
+					projectLabels.push("Day " + i);
+				};
+				console.log(projectLabels);
 
 				$scope.data = {
-    			labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",],
+    			labels: projectLabels,
 	    		datasets: [
-	        {
-	            label: "Burn Down",
-	            fillColor: "rgba(220,220,220,0.2)",
-	            strokeColor: "#009B57",
-	            pointColor: "rgba(220,220,220,1)",
-	            pointStrokeColor: "#fff",
-	            pointHighlightFill: "#fff",
-	            pointHighlightStroke: "rgba(220,220,220,1)",
-	            data: [70, 63, 56, 49, 42, 35, 28, 21, 14, 7]
-	        },
+	        	projectBurnDown,
 	        {
 	            label: "My Inputs",
-	            fillColor: "rgba(151,187,205,0.2)",
+	            fillColor: "RGBA(211, 63, 42, .2)",
 	            strokeColor: "rgba(151,187,205,1)",
-	            pointColor: "rgba(151,187,205,1)",
+	            pointColor: "RGBA(211, 63, 42, 1)",
 	            pointStrokeColor: "#fff",
 	            pointHighlightFill: "#fff",
 	            pointHighlightStroke: "rgba(151,187,205,1)",
