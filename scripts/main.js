@@ -196,8 +196,8 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ProjectsControl', ['$scope', '$rootScope', '$cookieStore', 'ProjectFactory', '$location',
-			function($scope, $rootScope, $cookieStore, ProjectFactory, $location){
+		.controller('ProjectsControl', ['$scope', '$rootScope', '$cookieStore', 'ProjectFactory', '$location', 'ListsFactory',
+			function ($scope, $rootScope, $cookieStore, ProjectFactory, $location, ListsFactory){
 
 				$rootScope.$on('project:added', function () {
 					ProjectFactory.getProjects()
@@ -214,7 +214,7 @@
 					// after getting all projects from server
 					// look through all projects for user specific projects
 					// allow controller to pass data to template
-					.success(function(results) {
+					.success(function (results) {
 						var user = $cookieStore.get('currentUser');
 						var results = results.results;
 						$scope.projects = _.where(results, {
@@ -225,6 +225,10 @@
 				$scope.clickProject = function (project) {
 					$cookieStore.put('currentProject', project);
 					$location.path('/project/' + project.objectId);
+					ListsFactory.getProjectLists()
+						.success(function (results) {
+							ListsFactory.getListTasks(results);
+						});
 				}; // end clickProject
 
 			} // end function
@@ -289,6 +293,7 @@
 				$scope.consoleReturn = function () {
 					$cookieStore.remove('currentProject');
 					$cookieStore.remove('currentList');
+					$cookieStore.remove('currentCollection');
 					ProjectFactory.consoleReturn();
 				};
 
@@ -305,28 +310,76 @@
 
 				var burnDownData = [];
 				var project = $cookieStore.get('currentProject');
+				var currentData = $cookieStore.get('currentCollection');
 				var total = project.hours;
-				burnDownData.length = 0;
-				
+				var hoursSum;
+				var tempData = [];
+
+				// Get total hours of task inputs
+				_.each(currentData, function (x) {
+					tempData.push(x.totalHours);
+				});
+				hoursSum = tempData.reduce(function (x, y) {
+					return x + y;
+				});
+				// end total hours of task inputs
+				console.log(hoursSum);
+
+				var DataSet = function (options) {
+					this.label = options.label,
+					this.fillColor = options.fillColor,
+					this.strokeColor = options.strokeColor,
+					this.pointColor = options.pointColor,
+					this.pointStrokeColor = options.pointStrokeColor,
+					this.pointHighlightFill = options.pointHighlightFill,
+					this.pointHighlightStroke = options.pointHighlightStroke,
+          this.data = options.data
+				}; // end constructor
+
+				console.log(project);
+				// Create burn down line for project
+					// Take hoursSum (total task hours), divide by number of days (weeks * 7)
+				var totalDays = (project.weeks * 7); // Total Number of days
+				var dailyReq = Math.ceil(hoursSum/totalDays); // Number of hours needed per day
+				burnDownData.push(hoursSum); // Set first value of dataset to total hours
+				for (var i = 0; i < totalDays; i++) {
+				  burnDownData.push(hoursSum -= dailyReq); // push linear values into burndown array
+				};
+				for (var i = 0; i < burnDownData.length; i++) {
+					if (burnDownData[i] <= 0) { // if there is a negative number, set equal to 0
+						burnDownData [i] = 0;
+					}
+				};
+				console.log(burnDownData);
+				// burndown line for project
+				var projectBurnDown = new DataSet ({
+					label : 'Burn Down',
+					fillColor : 'RGBA(21, 106, 235, .2)',
+          strokeColor : "#009B57",
+          pointColor : 'RGBA(21, 106, 235, 1)',
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#71A8A2",
+          pointHighlightStroke : "#71A8A2",
+					data : burnDownData
+				}); // end of projectBurnDown
+
+				console.log(currentData);
+
+				var projectLabels = [];
+				for (var i = 1; i < (totalDays + 1); i++) {
+					projectLabels.push("Day " + i);
+				};
+				console.log(projectLabels);
 
 				$scope.data = {
-    			labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",],
+    			labels: projectLabels,
 	    		datasets: [
-	        {
-	            label: "Burn Down",
-	            fillColor: "rgba(220,220,220,0.2)",
-	            strokeColor: "#009B57",
-	            pointColor: "rgba(220,220,220,1)",
-	            pointStrokeColor: "#fff",
-	            pointHighlightFill: "#fff",
-	            pointHighlightStroke: "rgba(220,220,220,1)",
-	            data: [70, 63, 56, 49, 42, 35, 28, 21, 14, 7]
-	        },
+	        	projectBurnDown,
 	        {
 	            label: "My Inputs",
-	            fillColor: "rgba(151,187,205,0.2)",
+	            fillColor: "RGBA(211, 63, 42, .2)",
 	            strokeColor: "rgba(151,187,205,1)",
-	            pointColor: "rgba(151,187,205,1)",
+	            pointColor: "RGBA(211, 63, 42, 1)",
 	            pointStrokeColor: "#fff",
 	            pointHighlightFill: "#fff",
 	            pointHighlightStroke: "rgba(151,187,205,1)",
@@ -349,25 +402,41 @@
 
 				$rootScope.$on('newList:added', function (event, args) {
 					ListsFactory.getLists().success(function(results) {
-						var currentProject = $cookieStore.get('currentProject');
-						var results = results.results;
-						$scope.lists = _.where(results, {
-							projectId: currentProject.objectId
-						});
+						setLists(results);
 					}); // end success
 				});
 
 				ListsFactory.getLists()
-					// after getting all projects from server
-					// look through all projects for user specific projects
-					// allow controller to pass data to template
 					.success(function(results) {
-						var currentProject = $cookieStore.get('currentProject');
-						var results = results.results;
-						$scope.lists = _.where(results, {
-							projectId: currentProject.objectId
-						});
+						ListsFactory.getProjectLists()
+							.success(function (results) {
+								ListsFactory.getListTasks(results)
+									.success( function () {
+										setLists(results);	
+									}); // end success
+							}); // end success
 					}); // end success
+
+				var setLists = function (results) {
+					var currentProject = $cookieStore.get('currentProject');
+					var results = results.results;
+					// $scope.lists = _.where(results, {
+					// 	projectId: currentProject.objectId
+					// });
+					// console.log($scope.lists);
+					var tempLists = _.where(results, {
+						projectId: currentProject.objectId
+					});
+					var totals = $cookieStore.get('currentCollection');
+					_.each(tempLists, function (x) {
+						var match = _.where(totals, {
+							id: x.objectId
+						});
+						x.totalHours = match[0]['totalHours'];
+						x.hoursLeft = match[0]['hoursLeft'];
+					}); // end of each
+					$scope.lists = tempLists;
+				}; // end setLists
 
 				$scope.addList = function (list) {
 					ListsFactory.addList(list);
@@ -394,6 +463,8 @@
 			function ($rootScope, $http, PARSE_HEADERS, $location, $cookieStore, ProjectFactory) {
 
 				var listURL = 'https://api.parse.com/1/classes/Lists/';
+				var projectURL = 'https://api.parse.com/1/classes/Project/';
+				var taskURL = 'https://api.parse.com/1/classes/Tasks/';
 
 				var getLists = function () {
 					return $http.get(listURL, PARSE_HEADERS);
@@ -420,7 +491,6 @@
 				}; // end addlist
 
 				var clickList = function (list) {
-					// $cookieStore.remove('currentList');
 					$cookieStore.put('currentList', list);
 				}; // end clickList
 
@@ -434,15 +504,70 @@
           		'Content-Type': 'application/json'
         		} // end headers
         	}; // end PARSE_HEADERS
-          console.log(PARSE_HEADERS);
+          // console.log(PARSE_HEADERS);
 					return $http.delete(listURL + id, PARSE_HEADERS);
 				}; // end deleteList
+
+				var getProjectLists = function () {
+					var currentProject = $cookieStore.get('currentProject');
+					var query = '?'+'where={"projectId":"'+currentProject.objectId+'"}';
+          return $http.get(listURL + query, PARSE_HEADERS);
+				}; // end getProjectLists
+
+				var getListTasks = function (results) {
+					var lists = results.results;
+					var currentProject = $cookieStore.get('currentProject');
+					var query = '?'+'where={"projectId":"'+currentProject.objectId+'"}';
+					return $http.get(taskURL + query, PARSE_HEADERS).success( function (results) {
+						var results = results.results;
+						calculateListTaskHours(results, lists);
+					});
+				}; // end getListTasks
+
+				var calculateListTaskHours = function (results, lists) {
+					// console.log(results);
+					// console.log(lists);
+					var ListData = function (options) {
+						this.id = options.id,
+						this.totalHours = options.totalHours,
+						this.hoursLeft = options.hoursLeft
+					};
+					var collection = [];
+					_.each(lists, function (x) {
+						var taskCollection = _.where(results, {listId : x.objectId});
+						var totalHoursList = [];
+						var totalHoursLeftList = [];
+						_.each(taskCollection, function (y) {
+							totalHoursList.push(y.initialHours);
+							totalHoursLeftList.push(y.hoursLeft);
+						});
+						var totalHoursSum = totalHoursList.reduce(function (x, y) {
+							return x + y;
+						});
+						var totalLeftSum = totalHoursLeftList.reduce(function (x, y) {
+							return x + y;
+						});
+						var listData = new ListData ({
+							id : x.objectId,
+							totalHours: totalHoursSum,
+							hoursLeft: totalLeftSum
+						});
+						collection.push(listData);
+					});
+					// collection is an array of instances
+					// each instance contains the list id 
+					// and the sum of each list's task's initial hours
+					$cookieStore.remove('currentCollection');
+					$cookieStore.put('currentCollection', collection);
+				}; // end calculateListTaskHours
 
 				return {
 					getLists: getLists,
 					addList: addList,
 					clickList: clickList,
-					deleteList: deleteList
+					deleteList: deleteList,
+					getProjectLists: getProjectLists,
+					getListTasks: getListTasks
 				}
 
 			} // end function
@@ -704,7 +829,6 @@
 						} else if (!hoursLeft) {
 							hoursLeft = initialHours;
 						} else {hoursLeft = hoursLeft + initialHours};
-						console.log(x);
 						batchRequests.push(
 
 							{
@@ -762,7 +886,8 @@
 								'initialHours'	: initialHours,
 								'hoursToday'		: hoursToday,
 								'hoursLeft'			: hoursLeft,
-								'title'					: x.title
+								'title'					: x.title,
+								'taskId'				: x.objectId
 								} // end body
 							} // end object
 
@@ -796,7 +921,6 @@
 						} else if (!hoursLeft) {
 							hoursLeft = initialHours;
 						} else {hoursLeft = hoursLeft - hoursToday};
-						console.log(hoursLeft);
 						batchRequests.push(
 
 							{
@@ -827,6 +951,29 @@
 
 			} // end function
 		]); // end factory
+}()); // end iif
+(function(){
+
+	angular.module('FinalProject')
+		.factory('HistoryFactory', ['$rootScope', '$http', 'PARSE_HEADERS', '$location', '$cookieStore', 
+			function ($rootScope, $http, PARSE_HEADERS, $location, $cookieStore) {
+
+				var taskHistoryUrl = 'https://api.parse.com/1/classes/TasksHistory/';
+
+				var getTasks = function () {
+					var currentUser = $cookieStore.get('currentUser');
+					var currentList = $cookieStore.get('currentList');
+					var query = '?'+'where={"listId":"'+currentList.objectId+'"}';
+          return $http.get(taskHistoryUrl + query, PARSE_HEADERS);
+				};
+
+				return {
+					getTasks: getTasks
+				}
+
+			} // end function
+		]); // end factory
+
 }()); // end iif
 (function(){
 
@@ -877,7 +1024,7 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('TaskChartControl', ['$scope', '$rootScope', 'ChartFactory', 'TasksFactory', 'DailyInputFactory', '$cookieStore',
+		.controller('DefunctTaskChartControl', ['$scope', '$rootScope', 'ChartFactory', 'TasksFactory', 'DailyInputFactory', '$cookieStore',
 			function ($scope, $rootScope, ChartFactory, TasksFactory, DailyInputFactory, $cookieStore) {
 
 				var burnDownData = [];
@@ -987,8 +1134,95 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('TaskAccordionControl', ['$scope',
-			function ($scope) {
+		.controller('TaskChartControl', ['$scope', '$rootScope', 'ChartFactory', 'ExtendedTasksFactory', '$cookieStore', 'HistoryFactory',
+			function ($scope, $rootScope, ChartFactory, ExtendedTasksFactory, $cookieStore, HistoryFactory) {
+
+				var graphLabels = [];
+
+				$rootScope.$on('taskHours:updated', function () {
+					displayGraph();
+				});
+
+				$rootScope.$on('list:clicked', function () {
+					displayGraph();
+				}); // end rootScope call
+
+				var displayGraph = function () {
+					var dataLabels = [];
+					var dataSets = [];
+					graphLabels = [];
+					// create a constructor for each individual task
+					var TaskDataSet = function (options) {
+						this.label = "Task",
+						this.fillColor = "rgba(220,220,220,0.2)",
+						this.strokeColor = "#009B57",
+						this.pointColor = "rgba(220,220,220,1)",
+						this.pointStrokeColor = "#fff",
+						this.pointHighlightFill = "#fff",
+						this.pointHighlightStroke = "rgba(220,220,220,1)",
+						this.data = options.data
+					};
+
+					HistoryFactory.getTasks().success( function (results) {
+						var tempLabels = [];
+						var results = results.results;
+						// console.log(results);
+						var taskIds = _.pluck(results, 'taskId');
+						var unique = _.uniq(taskIds);
+						var sameTasks = _.groupBy(results, 'taskId');
+						var pairsTasks = _.pairs(sameTasks);
+						// console.log(pairsTasks);
+						_.each(pairsTasks, function (y) {
+							var data = [];
+							var taskDataSet = new TaskDataSet({data: data});
+							dataSets.push(taskDataSet);
+							_.each(y, function (z) {
+								// console.log(z);
+								// data.push(z[1]);
+								_.each(z, function (a) {
+									if (a.hoursLeft) {
+										data.push(a.hoursLeft);
+									}
+									if (a.createdAt) {
+										tempLabels.push(a.createdAt);
+									}
+								});
+							}); // end y each
+							// console.log(data);
+						}); // end x each
+						// console.log(dataSets);
+						var convertTime = [];
+						_.each(tempLabels, function (x) {
+							 var date = new Date(x).toLocaleString();
+							 convertTime.push(date);
+						});
+						var uniqueLabels = _.uniq(convertTime);
+						graphLabels = [];
+						_.each(uniqueLabels, function (x) {
+							var y = x.toString();
+							graphLabels.push(y);
+						});
+						// console.log(graphLabels);
+						$scope.data = {
+		    			labels: graphLabels,
+			    		datasets: dataSets
+						}; // end scope data
+					}); // end get tasks
+
+
+					$scope.options = ChartFactory.getOptions(); // end scope
+
+				}; // end displayGraph
+
+			} // end function
+		]); // end controller
+
+}()); // end iif
+(function(){
+
+	angular.module('FinalProject')
+		.controller('TaskAccordionControl', ['$scope', '$cookieStore', '$rootScope',
+			function ($scope, $cookieStore, $rootScope) {
 
 			} // end function
 		]); // end controller
