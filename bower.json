@@ -15,6 +15,7 @@
     "angular-momentjs": "~0.1.8",
     "d3": "~3.4.13",
     "chartjs": "~0.2.0",
-    "tc-angular-chartjs": "~1.0.9"
+    "tc-angular-chartjs": "~1.0.9",
+    "angular-moment": "~0.8.2"
   }
 }

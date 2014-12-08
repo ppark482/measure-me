@@ -32,15 +32,19 @@
 					var tempLists = _.where(results, {
 						projectId: currentProject.objectId
 					});
+					console.log(tempLists);
 					var totals = $cookieStore.get('currentCollection');
-					_.each(tempLists, function (x) {
-						var match = _.where(totals, {
-							id: x.objectId
-						});
-						x.totalHours = match[0]['totalHours'];
-						x.hoursLeft = match[0]['hoursLeft'];
-					}); // end of each
-					$scope.lists = tempLists;
+					console.log(totals);
+					if (tempLists) {
+						_.each(tempLists, function (x) {
+							var match = _.where(totals, {
+								id: x.objectId
+							});
+							x.totalHours = match[0]['totalHours'];
+							x.hoursLeft = match[0]['hoursLeft'];
+						}); // end of each
+						$scope.lists = tempLists;
+					};
 				}; // end setLists
 
 				$scope.addList = function (list) {
