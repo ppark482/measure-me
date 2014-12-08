@@ -1,97 +1,101 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ProjectChartsControl', ['$scope', 'ChartFactory', '$cookieStore', 'ProjectChartsFactory',
-			function ($scope, ChartFactory, $cookieStore, ProjectChartsFactory) {
+		.controller('ProjectChartsControl', ['$scope', 'ChartFactory', '$cookieStore', 'ProjectChartsFactory', '$rootScope',
+			function ($scope, ChartFactory, $cookieStore, ProjectChartsFactory, $rootScope) {
 
 				ProjectChartsFactory.getProjectTasks().success(function (results) {
 					ProjectChartsFactory.manipulateTasks(results);
 				});
 
 				var burnDownData = [];
-				var project = $cookieStore.get('currentProject');
-				var currentData = $cookieStore.get('currentCollection');
-				if (currentData === undefined) {
-					currentData = [0];
-				};
-				var total = project.hours;
+				var project;
+				var currentData;
+				var total;
 				var hoursSum;
 				var tempData = [];
 
-				// Get total hours of task inputs
-				_.each(currentData, function (x) {
-					tempData.push(x.totalHours);
-				});
-				if (hoursSum) {
+				$rootScope.$on('single:project', function () {
+					project = $cookieStore.get('currentProject');
+					currentData = $cookieStore.get('currentCollection');
+					total = project.hours;
+					console.log(currentData);
+						// Get total hours of task inputs
+					_.each(currentData, function (x) {
+						tempData.push(x.totalHours);
+					});
 					hoursSum = tempData.reduce(function (x, y) {
 						return x + y;
 					});
-				} else { hoursSum = 0 };
-				// end total hours of task inputs
-				console.log(hoursSum);
+					// end total hours of task inputs
+					console.log(hoursSum);
 
-				var DataSet = function (options) {
-					this.label = options.label,
-					this.fillColor = options.fillColor,
-					this.strokeColor = options.strokeColor,
-					this.pointColor = options.pointColor,
-					this.pointStrokeColor = options.pointStrokeColor,
-					this.pointHighlightFill = options.pointHighlightFill,
-					this.pointHighlightStroke = options.pointHighlightStroke,
-          this.data = options.data
-				}; // end constructor
+					var DataSet = function (options) {
+						this.label = options.label,
+						this.fillColor = options.fillColor,
+						this.strokeColor = options.strokeColor,
+						this.pointColor = options.pointColor,
+						this.pointStrokeColor = options.pointStrokeColor,
+						this.pointHighlightFill = options.pointHighlightFill,
+						this.pointHighlightStroke = options.pointHighlightStroke,
+	          this.data = options.data
+					}; // end constructor
 
-				console.log(project);
-				// Create burn down line for project
-					// Take hoursSum (total task hours), divide by number of days (weeks * 7)
-				var totalDays = (project.weeks * 7); // Total Number of days
-				var dailyReq = Math.ceil(hoursSum/totalDays); // Number of hours needed per day
-				burnDownData.push(hoursSum); // Set first value of dataset to total hours
-				for (var i = 0; i < totalDays; i++) {
-				  burnDownData.push(hoursSum -= dailyReq); // push linear values into burndown array
-				};
-				for (var i = 0; i < burnDownData.length; i++) {
-					if (burnDownData[i] <= 0) { // if there is a negative number, set equal to 0
-						burnDownData [i] = 0;
-					}
-				};
-				console.log(burnDownData);
-				// burndown line for project
-				var projectBurnDown = new DataSet ({
-					label : 'Burn Down',
-					fillColor : 'RGBA(21, 106, 235, .2)',
-          strokeColor : "#009B57",
-          pointColor : 'RGBA(21, 106, 235, 1)',
-          pointStrokeColor : "#fff",
-          pointHighlightFill : "#71A8A2",
-          pointHighlightStroke : "#71A8A2",
-					data : burnDownData
-				}); // end of projectBurnDown
+					console.log(project);
+					// Create burn down line for project
+						// Take hoursSum (total task hours), divide by number of days (weeks * 7)
+					var totalDays = (project.weeks * 7); // Total Number of days
+					var dailyReq = Math.ceil(hoursSum/totalDays); // Number of hours needed per day
+					burnDownData.push(hoursSum); // Set first value of dataset to total hours
+					for (var i = 0; i < totalDays; i++) {
+					  burnDownData.push(hoursSum -= dailyReq); // push linear values into burndown array
+					};
+					for (var i = 0; i < burnDownData.length; i++) {
+						if (burnDownData[i] <= 0) { // if there is a negative number, set equal to 0
+							burnDownData [i] = 0;
+						}
+					};
+					console.log(burnDownData);
+					// burndown line for project
+					var projectBurnDown = new DataSet ({
+						label : 'Burn Down',
+						fillColor : 'RGBA(21, 106, 235, .2)',
+	          strokeColor : "#009B57",
+	          pointColor : 'RGBA(21, 106, 235, 1)',
+	          pointStrokeColor : "#fff",
+	          pointHighlightFill : "#71A8A2",
+	          pointHighlightStroke : "#71A8A2",
+						data : burnDownData
+					}); // end of projectBurnDown
 
-				// console.log(currentData);
+					console.log(currentData);
 
-				var projectLabels = [];
-				for (var i = 1; i < (totalDays + 1); i++) {
-					projectLabels.push("Day " + i);
-				};
-				console.log(projectLabels);
+					var projectLabels = [];
+					for (var i = 1; i < (totalDays + 1); i++) {
+						projectLabels.push("Day " + i);
+					};
+					console.log(projectLabels);
 
-				$scope.data = {
-    			labels: projectLabels,
-	    		datasets: [
-	        	projectBurnDown,
-	        {
-	            label: "My Inputs",
-	            fillColor: "RGBA(211, 63, 42, .2)",
-	            strokeColor: "rgba(151,187,205,1)",
-	            pointColor: "RGBA(211, 63, 42, 1)",
-	            pointStrokeColor: "#fff",
-	            pointHighlightFill: "#fff",
-	            pointHighlightStroke: "rgba(151,187,205,1)",
-	            data: [60, 55, 55, 55, 40]
-	        }
-	    		]
-				}; // end scope data
+					$scope.data = {
+	    			labels: projectLabels,
+		    		datasets: [
+		        	projectBurnDown,
+		        {
+		            label: "My Inputs",
+		            fillColor: "RGBA(211, 63, 42, .2)",
+		            strokeColor: "rgba(151,187,205,1)",
+		            pointColor: "RGBA(211, 63, 42, 1)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(151,187,205,1)",
+		            data: [60, 55, 55, 55, 40]
+		        }
+		    		]
+					}; // end scope data
+
+				}); // end $on
+
+
 
 				$scope.options = ChartFactory.getOptions(); // end scope
 

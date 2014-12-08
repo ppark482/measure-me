@@ -83,20 +83,12 @@
 							totalHoursList.push(y.initialHours);
 							totalHoursLeftList.push(y.hoursLeft);
 						});
-						if (totalHoursList = []) {
-							totalHoursList = [0];
-						} else {
-							var totalHoursSum = totalHoursList.reduce(function (x, y) {
-								return x + y;
-							});
-						};
-						if (totalHoursLeftList = []) {
-							totalHoursLeftList = [0]
-						} else {
-							var totalLeftSum = totalHoursLeftList.reduce(function (x, y) {
-								return x + y;
-							});
-						};
+						var totalHoursSum = totalHoursList.reduce(function (x, y) {
+							return x + y;
+						});
+						var totalLeftSum = totalHoursLeftList.reduce(function (x, y) {
+							return x + y;
+						});
 						var listData = new ListData ({
 							id : x.objectId,
 							totalHours: totalHoursSum,
@@ -109,6 +101,8 @@
 					// and the sum of each list's task's initial hours
 					$cookieStore.remove('currentCollection');
 					$cookieStore.put('currentCollection', collection);
+					console.log(collection);
+					$rootScope.$broadcast('single:project');
 				}; // end calculateListTaskHours
 
 				return {
