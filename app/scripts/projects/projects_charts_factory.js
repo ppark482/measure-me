@@ -12,6 +12,8 @@
           return $http.get(taskHistoryUrl + query, PARSE_HEADERS);
 				};
 
+				var dataByDate = [];
+
 				var manipulateTasks = function (results) {
 					var date = moment().format('MM-DD-YY');
 					console.log(date);
@@ -32,22 +34,28 @@
 						groupedByDate.push(z);
 					});
 					console.log(groupedByDate);
-					var dataByDate = [];
+					var sumOfDate;
+					dataByDate = [];
 					_.each(groupedByDate, function (x) {
 						var taskValues = [];
 						_.each(x, function (y) {
 							taskValues.push(y.hoursToday);
 						});
-						dataByDate = _.reduce(taskValues, function (x, y) {
+						sumOfDate = _.reduce(taskValues, function (x, y) {
 							return x + y;
 						}); // end reduce;
-						console.log(dataByDate);
+						dataByDate.push(sumOfDate);
 					});
 				}; // end manipulateTasks
 
+				var getDataByDate = function () {
+					return dataByDate;
+				};
+
 				return {
 					getProjectTasks: getProjectTasks,
-					manipulateTasks: manipulateTasks
+					manipulateTasks: manipulateTasks,
+					getDataByDate: getDataByDate
 				}
 
 			} // end function

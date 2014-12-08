@@ -13,9 +13,12 @@
 				var currentData;
 				var total;
 				var hoursSum;
+				var projectHoursSum;
 				var tempData = [];
 
-				$rootScope.$on('single:project', function () {
+				var remapProjectGraph = function () {
+					burnDownData = [];
+					tempData = [];
 					project = $cookieStore.get('currentProject');
 					currentData = $cookieStore.get('currentCollection');
 					total = project.hours;
@@ -24,11 +27,13 @@
 					_.each(currentData, function (x) {
 						tempData.push(x.totalHours);
 					});
+					console.log(tempData);
 					hoursSum = tempData.reduce(function (x, y) {
 						return x + y;
-					});
+					}, 0);
 					// end total hours of task inputs
 					console.log(hoursSum);
+					projectHoursSum = hoursSum;
 
 					var DataSet = function (options) {
 						this.label = options.label,
@@ -74,7 +79,16 @@
 					for (var i = 1; i < (totalDays + 1); i++) {
 						projectLabels.push("Day " + i);
 					};
-					console.log(projectLabels);
+					// console.log(projectLabels);
+
+					var dataForEachDate = ProjectChartsFactory.getDataByDate();
+					console.log(dataForEachDate);
+					// projectHoursSum // = 100
+					var graphData = [];
+					_.each(dataForEachDate, function (x) {
+						var y = projectHoursSum -= x;
+						graphData.push(y);
+					});
 
 					$scope.data = {
 	    			labels: projectLabels,
@@ -88,14 +102,20 @@
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(151,187,205,1)",
-		            data: [60, 55, 55, 55, 40]
+		            data: graphData
 		        }
 		    		]
 					}; // end scope data
 
+				};
+
+				$rootScope.$on('single:project', function () {
+					remapProjectGraph();
 				}); // end $on
 
-
+				$rootScope.$on('taskHours:updated', function () {
+					remapProjectGraph();
+				});
 
 				$scope.options = ChartFactory.getOptions(); // end scope
 

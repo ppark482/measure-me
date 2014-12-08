@@ -61,6 +61,7 @@
 					var currentProject = $cookieStore.get('currentProject');
 					var query = '?'+'where={"projectId":"'+currentProject.objectId+'"}';
 					return $http.get(taskURL + query, PARSE_HEADERS).success( function (results) {
+						console.log(results);
 						var results = results.results;
 						calculateListTaskHours(results, lists);
 					});
@@ -85,10 +86,10 @@
 						});
 						var totalHoursSum = totalHoursList.reduce(function (x, y) {
 							return x + y;
-						});
+						}, 0);
 						var totalLeftSum = totalHoursLeftList.reduce(function (x, y) {
 							return x + y;
-						});
+						}, 0);
 						var listData = new ListData ({
 							id : x.objectId,
 							totalHours: totalHoursSum,
