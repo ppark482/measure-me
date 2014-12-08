@@ -8,7 +8,7 @@
 					TasksFactory.getTasks().success( function (data) {
 						var results = data.results;
 						_.each(results, function (x) {
-							x.hoursToday = ''
+							x.hoursToday = '';
 						});
 						$scope.tasks = results;
 					});

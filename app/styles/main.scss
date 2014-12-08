@@ -1,5 +1,7 @@
  // Bourbon & Neat
 @import '../../bower_components/bourbon/dist/bourbon';
+@import '../../base/grid-settings';
+@import '../../base/base';
 @import '../../bower_components/neat/app/assets/stylesheets/neat';
 @import 'd3styles';
 @import 'singleProjectStyles';

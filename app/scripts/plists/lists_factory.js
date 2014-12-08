@@ -83,12 +83,20 @@
 							totalHoursList.push(y.initialHours);
 							totalHoursLeftList.push(y.hoursLeft);
 						});
-						var totalHoursSum = totalHoursList.reduce(function (x, y) {
-							return x + y;
-						});
-						var totalLeftSum = totalHoursLeftList.reduce(function (x, y) {
-							return x + y;
-						});
+						if (totalHoursList = []) {
+							totalHoursList = [0];
+						} else {
+							var totalHoursSum = totalHoursList.reduce(function (x, y) {
+								return x + y;
+							});
+						};
+						if (totalHoursLeftList = []) {
+							totalHoursLeftList = [0]
+						} else {
+							var totalLeftSum = totalHoursLeftList.reduce(function (x, y) {
+								return x + y;
+							});
+						};
 						var listData = new ListData ({
 							id : x.objectId,
 							totalHours: totalHoursSum,

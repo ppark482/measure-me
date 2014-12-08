@@ -1,12 +1,19 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ProjectChartsControl', ['$scope', 'ChartFactory', '$cookieStore',
-			function ($scope, ChartFactory, $cookieStore) {
+		.controller('ProjectChartsControl', ['$scope', 'ChartFactory', '$cookieStore', 'ProjectChartsFactory',
+			function ($scope, ChartFactory, $cookieStore, ProjectChartsFactory) {
+
+				ProjectChartsFactory.getProjectTasks().success(function (results) {
+					ProjectChartsFactory.manipulateTasks(results);
+				});
 
 				var burnDownData = [];
 				var project = $cookieStore.get('currentProject');
 				var currentData = $cookieStore.get('currentCollection');
+				if (currentData === undefined) {
+					currentData = [0];
+				};
 				var total = project.hours;
 				var hoursSum;
 				var tempData = [];
@@ -15,9 +22,11 @@
 				_.each(currentData, function (x) {
 					tempData.push(x.totalHours);
 				});
-				hoursSum = tempData.reduce(function (x, y) {
-					return x + y;
-				});
+				if (hoursSum) {
+					hoursSum = tempData.reduce(function (x, y) {
+						return x + y;
+					});
+				} else { hoursSum = 0 };
 				// end total hours of task inputs
 				console.log(hoursSum);
 
@@ -59,7 +68,7 @@
 					data : burnDownData
 				}); // end of projectBurnDown
 
-				console.log(currentData);
+				// console.log(currentData);
 
 				var projectLabels = [];
 				for (var i = 1; i < (totalDays + 1); i++) {
