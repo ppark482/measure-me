@@ -1,4 +1,4 @@
-<header class="navigation">
+<header class="navigation  texture-inverted">
 	<div class="navigation-wrapper">
 		<div class="nav">
 			<ul id="navigation-menu">
@@ -8,16 +8,18 @@
 				<li class="nav-link"><a ng-click="logout()">Log Out</a></li>
 			</ul>
 		</div> <!-- end nav -->
+		<div class="navigation-tools" ng-controller="MainModalControl">
+			<div class="search-and-submit">
+			  <button class="button" ng-click="open()">Add Project</button>
+			</div>
+		</div>
 	</div><!-- end nav wrapper -->
 </header>
 
-<div ng-controller="MainModalControl" style="padding-top: 60px">
-  <button class="button" ng-click="open()">Add Project</button>
-</div>
 
-<div ng-controller="ProjectsControl">
+<div ng-controller="ProjectsControl" style="padding: 80px 20px 20px 20px">
 	<div>
-		<h4>My Projects:</h4>
+		<!-- <h3>My Projects:</h3> -->
 		<ul class="cards">
 			<li class="card" ng-repeat="project in projects" ng-click="clickProject(project)" id="{{ project.objectId }}">
 				<div class="card-header">{{ project.title }}</div>

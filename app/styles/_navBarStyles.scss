@@ -251,7 +251,7 @@ header.navigation {
     padding-right: $navigation-padding;
     padding-left: $navigation-padding/2;
     clear: both;
-    background: #505050;
+    /*background: #505050;*/
 
     @include media($large-screen) {
       background: transparent;
