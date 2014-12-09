@@ -30,50 +30,64 @@
 	</div>
 	<div class="half" ng-controller="ListsControl">
 		<div> <!-- 1 -->
-			<h4>Lists:</h4>
+			<div class="addNewList">
+				<input class="toBeCleared" type="text" placeholder="Add New List" ng-model="list.title">
+				<button class="button" ng-click="addList(list)">New List</button>
+			</div>
 			<div ng-controller="AccordionController">
 				<accordion close-others="true">
 					<!-- ================================ REPLICATING ================================ -->
-					<accordion-group heading="{{ list.title }} || {{ list.hoursLeft }} of {{ list.totalHours }} hours remaining" id="{{ list.objectId }}" ng-repeat="list in lists" class="projectCard listCard" ng-click="clickList(list)">
-						<ul class="projectWrapper">
+					<accordion-group heading="{{ list.title }} || {{ list.hoursLeft }} of {{ list.totalHours }} hours remaining" id="{{ list.objectId }}" ng-repeat="list in lists" ng-click="clickList(list)">
+						<ul>
 							<li>
-								<div class="projectWrapper" ng-controller="TasksControl">
-									
+								<div ng-controller="TasksControl">
 									<div class="taskWrapper">
-										<div id="taskLists">Tasks: <span id="totalTarget">{{ totalTime }}</span>
+										<div id="taskLists">
 											<!-- ================================ SHOW FIRST ================================ -->
-											<table ng-table class="setTasksTable" ng-show="timeSet">
-												<tr>
-													<td><input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title"></td>
-													<td><button ng-click="addTask(task)" stop-event>Add</button></td></tr>
-												<tr ng-repeat="task in tasks">
-													<td>{{task.title}} <a ng-click="deleteTask(task)" stop-event>[X]</a></td>
-													<td><input class="toBeCleared" type="text" placeholder="Set Hours" ng-model="task.initialHours" stop-event></td></tr>
-												<tr>
-													<td></td>
-													<td><button ng-click="setInitialHours(tasks)" stop-event>Set Task Hours</button></td></tr>
+											<table ng-table class="setTasksTable table-minimal" ng-show="timeSet">
+												<thead>
+													<tr>
+														<td><input class="toBeCleared" type="text" placeholder="Add New Task" ng-model="task.title"></td>
+														<td><button class="button" ng-click="addTask(task)" stop-event>Add</button></td>
+													</tr>
+												</thead>
+													<tbody>
+													<tr ng-repeat="task in tasks">
+														<td>{{task.title}} <a ng-click="deleteTask(task)" stop-event>[X]</a></td>
+														<td><input class="toBeCleared" type="text" placeholder="Set Hours" ng-model="task.initialHours" stop-event></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td><button class="button" ng-click="setInitialHours(tasks)" stop-event>Set Task Hours</button></td>
+													</tr>
+												</tbody>
 											</table>
 											<!-- ================================ HIDE FIRST ================================ -->
-											<table ng-table class="setTasksTable" ng-hide="timeSet">
-												<tr><button ng-click="goToEdit()" stop-event>Add/Edit Tasks</button></tr>
-												<tr>
-													<td>Task</td>
-													<td>Hours Left</td>
-													<td>Hours Completed Today</td>
-												</tr>
-												<tr ng-repeat="task in tasks">
-													<td>{{ task.title }}</td>
-													<td>
-														<span ng-if="putHoursLeft(task)"> {{ task.hoursLeft }}</span>
-														<span ng-if="hoursLeftComplete(task)" style="color:green">COMPLETE</span>
-														<span ng-if="putInitialHours(task)"> {{ task.initialHours }}</span>
-													</td>
-													<td><input ng-if="!hoursLeftComplete(task)" class="toBeCleared hoursCompletedToday" type="text" placeholder="Hours Completed Today" ng-model="task.hoursToday" stop-event></td>
-												</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td><button ng-click="submitTodaysTimes(tasks)" stop-event>Submit Today's Times</button></td></tr>
+											<table ng-table class="setTasksTable table-minimal" ng-hide="timeSet">
+												<thead>
+													<tr><button class="button" ng-click="goToEdit()" stop-event>Add/Edit Tasks</button></tr>
+													<tr>
+														<td>Task</td>
+														<td>Hours Left</td>
+														<td>Hours Completed Today</td>
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="task in tasks">
+														<td>{{ task.title }}</td>
+														<td>
+															<span ng-if="putHoursLeft(task)"> {{ task.hoursLeft }}</span>
+															<span ng-if="hoursLeftComplete(task)" style="color:green">COMPLETE</span>
+															<span ng-if="putInitialHours(task)"> {{ task.initialHours }}</span>
+														</td>
+														<td><input ng-if="!hoursLeftComplete(task)" class="toBeCleared hoursCompletedToday" type="text" placeholder="Hours Completed Today" ng-model="task.hoursToday" stop-event></td>
+													</tr>
+													<tr>
+														<td></td>
+														<td></td>
+														<td><button class="button" ng-click="submitTodaysTimes(tasks)" stop-event>Submit Today's Times</button></td>
+													</tr>
+												</tbody>
 											</table>
 										</div> <!-- end taskLists -->
 										<!-- ================================ TASK LIST CHART ================================ -->
@@ -84,17 +98,13 @@
 									</div> <!-- end taskWrapper -->
 								</div> <!-- end TasksControl -->
 
-								<button class="tiny" ng-click="deleteList(list.objectId, $index)" stop-event>Delete List</button>
+								<button class="tiny button" ng-click="deleteList(list.objectId, $index)" stop-event>Delete List</button>
 							</li> <!-- end list in lists -->
 						</ul> <!-- end projectWrapper -->
 					</accordion-group>
 					<!-- ================================  end REPLICATING ================================ -->
 				</accordion>
 			</div> <!-- end accordion controller -->
-			<div class="addNewList">
-							<input class="toBeCleared" type="text" placeholder="Add New List" ng-model="list.title">
-							<button ng-click="addList(list)">New List</button>
-						</div>
 		</div> <!-- 1 -->
 	</div> <!-- end ListsControl -->
 </div>
