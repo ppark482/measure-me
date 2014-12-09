@@ -32,9 +32,9 @@
 					var tempLists = _.where(results, {
 						projectId: currentProject.objectId
 					});
-					console.log(tempLists);
+					// console.log(tempLists);
 					var totals = $cookieStore.get('currentCollection');
-					console.log(totals);
+					// console.log(totals);
 					if (tempLists) {
 						_.each(tempLists, function (x) {
 							var match = _.where(totals, {

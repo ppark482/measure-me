@@ -16,7 +16,7 @@
 
 				var manipulateTasks = function (results) {
 					var date = moment().format('MM-DD-YY');
-					console.log(date);
+					// console.log(date);
 					var results = results.results;
 					var datesArray = [];
 					_.each(results, function (x) {
@@ -25,15 +25,15 @@
 						datesArray.push(y);
 					});
 					var uniqueDates = _.uniq(datesArray);
-					console.log(results);
-					console.log(uniqueDates);
+					// console.log(results);
+					// console.log(uniqueDates);
 					// var startDate = uniqueDates[0];
 					var groupedByDate = [];
 					_.each(uniqueDates, function (x) {
 						var z = _.where(results, {createdDate : x});
 						groupedByDate.push(z);
 					});
-					console.log(groupedByDate);
+					// console.log(groupedByDate);
 					var sumOfDate;
 					dataByDate = [];
 					_.each(groupedByDate, function (x) {

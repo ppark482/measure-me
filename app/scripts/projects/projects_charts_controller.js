@@ -22,17 +22,17 @@
 					project = $cookieStore.get('currentProject');
 					currentData = $cookieStore.get('currentCollection');
 					total = project.hours;
-					console.log(currentData);
+					// console.log(currentData);
 						// Get total hours of task inputs
 					_.each(currentData, function (x) {
 						tempData.push(x.totalHours);
 					});
-					console.log(tempData);
+					// console.log(tempData);
 					hoursSum = tempData.reduce(function (x, y) {
 						return x + y;
 					}, 0);
 					// end total hours of task inputs
-					console.log(hoursSum);
+					// console.log(hoursSum);
 					projectHoursSum = hoursSum;
 
 					var DataSet = function (options) {
@@ -46,7 +46,7 @@
 	          this.data = options.data
 					}; // end constructor
 
-					console.log(project);
+					// console.log(project);
 					// Create burn down line for project
 						// Take hoursSum (total task hours), divide by number of days (weeks * 7)
 					var totalDays = (project.weeks * 7); // Total Number of days
@@ -60,7 +60,7 @@
 							burnDownData [i] = 0;
 						}
 					};
-					console.log(burnDownData);
+					// console.log(burnDownData);
 					// burndown line for project
 					var projectBurnDown = new DataSet ({
 						label : 'Burn Down',
@@ -73,7 +73,7 @@
 						data : burnDownData
 					}); // end of projectBurnDown
 
-					console.log(currentData);
+					// console.log(currentData);
 
 					var projectLabels = [];
 					for (var i = 1; i < (totalDays + 1); i++) {
@@ -82,7 +82,7 @@
 					// console.log(projectLabels);
 
 					var dataForEachDate = ProjectChartsFactory.getDataByDate();
-					console.log(dataForEachDate);
+					// console.log(dataForEachDate);
 					// projectHoursSum // = 100
 					var graphData = [];
 					_.each(dataForEachDate, function (x) {

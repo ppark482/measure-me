@@ -27,9 +27,9 @@
 						this.pointStrokeColor = "#fff",
 						this.pointHighlightFill = "#fff",
 						this.pointHighlightStroke = "rgba(220,220,220,1)",
+						this.createdData = options.createdData,
 						this.data = options.data
 					};
-
 					HistoryFactory.getTasks().success( function (results) {
 						var tempLabels = [];
 						var results = results.results;
@@ -41,23 +41,29 @@
 						// console.log(pairsTasks);
 						_.each(pairsTasks, function (y) {
 							var data = [];
-							var taskDataSet = new TaskDataSet({data: data});
+							var createdData = [];
+							var taskDataSet = new TaskDataSet({
+								data : data,
+								createdData : createdData
+							});
 							dataSets.push(taskDataSet);
 							_.each(y, function (z) {
 								// console.log(z);
 								// data.push(z[1]);
 								_.each(z, function (a) {
+									console.log(a);
 									if (a.hoursLeft) {
 										data.push(a.hoursLeft);
 									}
 									if (a.createdAt) {
 										tempLabels.push(a.createdAt);
+										createdData.push(a.createdAt);
 									}
 								});
 							}); // end y each
 							// console.log(data);
 						}); // end x each
-						// console.log(dataSets);
+						console.log(dataSets);
 						var convertTime = [];
 						_.each(tempLabels, function (x) {
 							 var date = new Date(x).toLocaleString();
@@ -69,10 +75,20 @@
 							var y = x.toString();
 							graphLabels.push(y);
 						});
-						// console.log(graphLabels);
+						console.log(graphLabels);
+						if (graphLabels.length === 0) {
+							graphLabels = [0];
+						};
+						if (dataSets.length === 0) {
+							var nothing = new TaskDataSet({
+									data : [0],
+									createdData : [0]
+								});
+							dataSets.push(nothing); // end push
+						}; 
 						$scope.data = {
-		    			labels: graphLabels,
-			    		datasets: dataSets
+	    				labels: graphLabels,
+		    			datasets: dataSets
 						}; // end scope data
 					}); // end get tasks
 
