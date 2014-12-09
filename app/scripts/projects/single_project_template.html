@@ -17,19 +17,19 @@
 </header>
 
 <div style="padding: 80px 20px 20px 20px" class="projectWrapper">
-	<h2>{{ project.title }}</h2>
 	<div class="half">
+		<h3>{{ project.title }}</h3>
 		<ul>
 			<li>Expected number of weeks to completion: {{ project.weeks }} </li>
 			<li>Project was created at {{ project.createdAt }}</li>
 			<li>Expected number of total hours to completion: <span class="hours">{{ project.hours }}</span></li>
 		</ul>
-	</div>
-	<div id="projectChartDisplay" ng-controller="ProjectChartsControl">
-	  <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="500" height="300"></canvas>
+		<div id="projectChartDisplay" ng-controller="ProjectChartsControl">
+		  <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="300" height="150"></canvas>
+		</div>
 	</div>
 	<div class="half" ng-controller="ListsControl">
-		<div class="projectWrapper"> <!-- 1 -->
+		<div> <!-- 1 -->
 			<h4>Lists:</h4>
 			<div ng-controller="AccordionController">
 				<accordion close-others="true">

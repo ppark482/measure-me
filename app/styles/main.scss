@@ -40,7 +40,6 @@
 }
 .half {
   @include span-columns(6);
-  @include omega (2n);
 }
 li {
   list-style-type: none;
