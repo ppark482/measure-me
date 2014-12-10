@@ -45,7 +45,7 @@
         		} // end headers
         	}; // end PARSE_HEADERS
         	var id = task.objectId;
-        	console.log(id);
+        	// console.log(id);
         	return $http.delete(taskURL + id, PARSE_HEADERS)
         		.success( function () {
         			$rootScope.$broadcast('task:deleted');

@@ -61,7 +61,7 @@
 					var currentProject = $cookieStore.get('currentProject');
 					var query = '?'+'where={"projectId":"'+currentProject.objectId+'"}';
 					return $http.get(taskURL + query, PARSE_HEADERS).success( function (results) {
-						console.log(results);
+						// console.log(results);
 						var results = results.results;
 						calculateListTaskHours(results, lists);
 					});
@@ -102,7 +102,7 @@
 					// and the sum of each list's task's initial hours
 					$cookieStore.remove('currentCollection');
 					$cookieStore.put('currentCollection', collection);
-					console.log(collection);
+					// console.log(collection);
 					$rootScope.$broadcast('single:project');
 				}; // end calculateListTaskHours
 

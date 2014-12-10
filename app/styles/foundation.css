@@ -1107,6 +1107,7 @@ button, .button {
   font-size: 1rem;
   background-color: #156aeb;
   border-color: #1055bd;
+  box-shadow: 0px 1px 3px black;
   color: white;
   transition: background-color 300ms ease-out; }
   button:hover, button:focus, .button:hover, .button:focus {
