@@ -25,7 +25,7 @@
 			<li>Expected number of total hours to completion: <span class="hours">{{ project.hours }}</span></li>
 		</ul>
 		<div id="projectChartDisplay" ng-controller="ProjectChartsControl">
-		  <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="300" height="150"></canvas>
+		  <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="300" height="200"></canvas>
 		</div>
 	</div>
 	<div class="half" ng-controller="ListsControl">
@@ -65,7 +65,7 @@
 											<!-- ================================ HIDE FIRST ================================ -->
 											<table ng-table class="setTasksTable table-minimal" ng-hide="timeSet">
 												<thead>
-													<tr><button class="button" ng-click="goToEdit()" stop-event>Add/Edit Tasks</button></tr>
+													<tr><button class="tiny button" ng-click="goToEdit()" stop-event>Add/Edit Tasks</button></tr>
 													<tr>
 														<td>Task</td>
 														<td>Hours Left</td>
@@ -83,22 +83,22 @@
 														<td><input ng-if="!hoursLeftComplete(task)" class="toBeCleared hoursCompletedToday" type="text" placeholder="Hours Completed Today" ng-model="task.hoursToday" stop-event></td>
 													</tr>
 													<tr>
+														<td><button class="button" style="background-color:#D53E2A" ng-click="deleteList(list.objectId, $index)" stop-event>Delete List</button></td>
 														<td></td>
-														<td></td>
-														<td><button class="button" ng-click="submitTodaysTimes(tasks)" stop-event>Submit Today's Times</button></td>
+														<td><button class="button" ng-click="submitTodaysTimes(tasks)" stop-event>Submit</button></td>
 													</tr>
 												</tbody>
 											</table>
 										</div> <!-- end taskLists -->
 										<!-- ================================ TASK LIST CHART ================================ -->
-										<div ng-controller="TaskChartControl">
-											<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="400" height="300"></canvas>
+											<div ng-controller="TaskChartControl">
+												<canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="400" height="300"></canvas>
 										</div>
 										<!-- ================================ end TASK LIST CHART ================================ -->
 									</div> <!-- end taskWrapper -->
 								</div> <!-- end TasksControl -->
 
-								<button class="tiny button" ng-click="deleteList(list.objectId, $index)" stop-event>Delete List</button>
+								
 							</li> <!-- end list in lists -->
 						</ul> <!-- end projectWrapper -->
 					</accordion-group>

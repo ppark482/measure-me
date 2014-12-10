@@ -33,12 +33,12 @@
 					HistoryFactory.getTasks().success( function (results) {
 						var tempLabels = [];
 						var results = results.results;
-						// console.log(results);
+						console.log(results);
 						var taskIds = _.pluck(results, 'taskId');
 						var unique = _.uniq(taskIds);
 						var sameTasks = _.groupBy(results, 'taskId');
 						var pairsTasks = _.pairs(sameTasks);
-						// console.log(pairsTasks);
+						console.log(pairsTasks);
 						_.each(pairsTasks, function (y) {
 							var data = [];
 							var createdData = [];
@@ -46,9 +46,8 @@
 								data : data,
 								createdData : createdData
 							});
-							dataSets.push(taskDataSet);
 							_.each(y, function (z) {
-								// console.log(z);
+								console.log(z);
 								// data.push(z[1]);
 								_.each(z, function (a) {
 									console.log(a);
@@ -57,18 +56,22 @@
 									}
 									if (a.createdAt) {
 										tempLabels.push(a.createdAt);
-										createdData.push(a.createdAt);
 									}
-								});
+									// createdData.push(a.createdAt);
+									}
+								);
 							}); // end y each
+							dataSets.push(taskDataSet);
 							// console.log(data);
 						}); // end x each
+						console.log(tempLabels);///////////////////////////////////////////////
 						console.log(dataSets);
 						var convertTime = [];
 						_.each(tempLabels, function (x) {
 							 var date = new Date(x).toLocaleString();
 							 convertTime.push(date);
 						});
+						console.log(convertTime);
 						var uniqueLabels = _.uniq(convertTime);
 						graphLabels = [];
 						_.each(uniqueLabels, function (x) {
@@ -79,13 +82,13 @@
 						if (graphLabels.length === 0) {
 							graphLabels = [0];
 						};
-						if (dataSets.length === 0) {
-							var nothing = new TaskDataSet({
-									data : [0],
-									createdData : [0]
-								});
-							dataSets.push(nothing); // end push
-						}; 
+						// if (dataSets.length === 0) {
+						// 	var nothing = new TaskDataSet({
+						// 			data : [0],
+						// 			createdData : [0]
+						// 		});
+						// 	dataSets.push(nothing); // end push
+						// }; 
 						$scope.data = {
 	    				labels: graphLabels,
 		    			datasets: dataSets

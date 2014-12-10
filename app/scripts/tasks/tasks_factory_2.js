@@ -8,6 +8,7 @@
 				var historyURL = 'https://api.parse.com/1/classes/TasksHistory/';
 
 				var setInitialHours = function (tasks) {
+					console.log(tasks);
 					var batchRequests = [];
 					_.each(tasks, function (x) {
 						var initialHours = x.initialHours === '' ? x.initialHours = 0 : parseInt(x.initialHours);
@@ -27,7 +28,6 @@
 								'hoursLeft'		: hoursLeft
 							} // end body
 						} // end object
-
 							) // end push
 					});
 					var user = $cookieStore.get('currentUser');
@@ -110,7 +110,6 @@
 							hoursLeft = initialHours;
 						} else {hoursLeft = hoursLeft - hoursToday};
 						batchRequests.push(
-
 							{
 							'method': 'PUT',
 							'path'  : '/1/classes/Tasks/' + x.objectId,
@@ -120,7 +119,6 @@
 								'hoursLeft'			: hoursLeft
 								} // end body
 							} // end object
-
 						) // end push
 					}); // end each loop
 					var params = {

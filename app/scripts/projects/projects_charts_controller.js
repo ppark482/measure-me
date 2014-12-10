@@ -8,6 +8,12 @@
 					ProjectChartsFactory.manipulateTasks(results);
 				});
 
+				$rootScope.$on('taskHours:updated', function () {
+					ProjectChartsFactory.getProjectTasks().success(function (results) {
+						ProjectChartsFactory.manipulateTasks(results);
+					});
+				});
+
 				var burnDownData = [];
 				var project;
 				var currentData;
@@ -22,17 +28,16 @@
 					project = $cookieStore.get('currentProject');
 					currentData = $cookieStore.get('currentCollection');
 					total = project.hours;
-					// console.log(currentData);
+					console.log(currentData);
 						// Get total hours of task inputs
 					_.each(currentData, function (x) {
 						tempData.push(x.totalHours);
 					});
-					// console.log(tempData);
 					hoursSum = tempData.reduce(function (x, y) {
 						return x + y;
 					}, 0);
 					// end total hours of task inputs
-					// console.log(hoursSum);
+					console.log(hoursSum);
 					projectHoursSum = hoursSum;
 
 					var DataSet = function (options) {
@@ -50,10 +55,12 @@
 					// Create burn down line for project
 						// Take hoursSum (total task hours), divide by number of days (weeks * 7)
 					var totalDays = (project.weeks * 7); // Total Number of days
-					var dailyReq = Math.ceil(hoursSum/totalDays); // Number of hours needed per day
+					// var dailyReq = Math.ceil(hoursSum/totalDays); // Number of hours needed per day
+					var dailyReq = hoursSum/totalDays;
+					// Math.round( (hoursSum -= dailyReq) * 10) / 10
 					burnDownData.push(hoursSum); // Set first value of dataset to total hours
 					for (var i = 0; i < totalDays; i++) {
-					  burnDownData.push(hoursSum -= dailyReq); // push linear values into burndown array
+					  burnDownData.push(Math.round( (hoursSum -= dailyReq) * 100) / 100); // push linear values into burndown array
 					};
 					for (var i = 0; i < burnDownData.length; i++) {
 						if (burnDownData[i] <= 0) { // if there is a negative number, set equal to 0
