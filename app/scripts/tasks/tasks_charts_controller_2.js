@@ -18,12 +18,16 @@
 					var dataLabels = [];
 					var dataSets = [];
 					graphLabels = [];
+					/* Random assignment of colors */
+					var colors = ['HSLA(216, 84%, 50%, 1)', 'HSLA(7, 67%, 50%, 1)', 'HSLA(39, 91%, 66%, 1)', 'HSLA(154, 100%, 30%, 1)', 'HSLA(359, 79%, 30%, 1)'];
+					var colorsCounter = 0;
+					var color = colors[colorsCounter++ % colors.length];
 					// create a constructor for each individual task
 					var TaskDataSet = function (options) {
 						this.label = "Task",
 						this.fillColor = "rgba(220,220,220,0.2)",
 						this.strokeColor = "#009B57",
-						this.pointColor = "rgba(220,220,220,1)",
+						this.pointColor = color,
 						this.pointStrokeColor = "#fff",
 						this.pointHighlightFill = "#fff",
 						this.pointHighlightStroke = "rgba(220,220,220,1)",
