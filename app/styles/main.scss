@@ -18,27 +18,26 @@
   background: #fafafa;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
-}
+}*/
 
-.container {
-  margin: 50px auto 0 auto;
-  width: 1000px;
+/*.container {
   font-size: 18px;
   font-weight: 200;
+  height: 100% ;
   line-height: 30px;
   background-color: #eee;
   border-radius: 6px;
   padding: 60px;
-  h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
+  background: url(https://s3.amazonaws.com/f.cl.ly/items/2U1e383d0i1c2f0V3S1r/Image%202014-12-10%20at%208.14.08%20AM.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   #loginSection {
     width: 400px;
   }
-}
-*/
+}*/
+
 .projectWrapper {
   @include outer-container;
 }

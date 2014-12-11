@@ -38,7 +38,7 @@
 			<div ng-controller="AccordionController">
 				<accordion class="flex-boxes" close-others="true">
 					<!-- ================================ REPLICATING ================================ -->
-					<accordion-group class="flex-box" heading="{{ list.title }} || {{ list.hoursLeft }} hours left" id="{{ list.objectId }}" ng-repeat="list in lists" ng-click="clickList(list)" style="text-align:right">
+					<accordion-group class="flex-box" heading="{{ list.title }} :: {{ list.hoursLeft }} hours left" id="{{ list.objectId }}" ng-repeat="list in lists" ng-click="clickList(list)" style="text-align:right">
 						<ul>
 							<li>
 								<div ng-controller="TasksControl">
