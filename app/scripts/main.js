@@ -1,6 +1,6 @@
 (function(){
 
-	angular.module('FinalProject', ['ngRoute', 'mm.foundation', 'ngCookies', 'angularMoment', 'tc.chartjs']) // setter
+	angular.module('FinalProject', ['ngRoute', 'mm.foundation', 'ngCookies', 'angularMoment', 'tc.chartjs', 'angular-svg-round-progress']) // setter
 
 		.constant('PARSE_HEADERS', {
       headers: {

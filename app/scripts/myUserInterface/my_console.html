@@ -24,13 +24,20 @@
 		<ul class="cards">
 			<li class="card" ng-repeat="project in projects" ng-click="clickProject(project)" id="{{ project.objectId }}">
 				<div class="card-header">{{ project.title }}</div>
-				<div class="card-copy">Category: <span style="font-weight:bold">{{ project.category }}</span></div>
-				<div class="card-stats">
-					<ul>
-						<li>{{ project.hours }}<span>HOURS</span></li>
-						<li>{{ project.weeks }}<span>WEEKS</span></li>
-					</ul>
-				</div>
+					<div class="half">
+						<div class="card-copy">Category: <p style="font-weight:bold">{{ project.category }}</p></div>
+						<div class="card-stats">
+							<ul>
+								<li>{{ project.hours }}<span>HOURS</span></li>
+								<li>{{ project.weeks }}<span>WEEKS</span></li>
+							</ul>
+						</div>
+					</div>
+					<div class="half" style="text-align:center">
+						<div round-progress max="project.hours" current="project.hoursCompleted" color="#009B57" bgcolor="#eaeaea" radius="40" stroke="10"semi="false">
+						</div>
+						<div style="font-size:10px">{{ ((project.hoursCompleted / project.hours) * 100) }}% completed</div>
+					</div>
 			</li>
 		</ul>
 	</div> <!-- end card -->
