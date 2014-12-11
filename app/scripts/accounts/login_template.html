@@ -1,13 +1,18 @@
-<div id="loginWrapper">
-	<div></div>
-	<div id="loginSection">
-		<form id="loginForm" ng-submit="login(user)">
-			<h2>Log In</h2>
-			<input ng-model="user.username" type="text" placeholder="Username">
-			<input ng-model="user.password" type="password" placeholder="Password">
-			<button>Log In</button>
-		</form>
-		<a href="#/register">Create Account</a><br>
-		<a href="#">Forgot Password?</a>
-	</div>
-</div>
+<div class="side-image">
+  <div class="images-wrapper"></div>
+    <div class="content">
+	    <div id="loginWrapper">
+				<div id="loginSection">
+					<form id="loginForm" ng-submit="login(user)">
+						<h2>Login to your account</h2>
+						<input ng-model="user.username" type="text" placeholder="Username">
+						<input ng-model="user.password" type="password" placeholder="Password">
+						<button class="button">Log In</button>
+					</form>
+					<a href="#/register">Create Account</a><br>
+					<a href="#">Forgot Password?</a>
+				</div> <!-- end login section -->
+			</div> <!-- end login wrapper -->
+		</div> <!-- end content -->
+  </div> <!-- end images wrapper -->
+</div> <!-- end side image -->

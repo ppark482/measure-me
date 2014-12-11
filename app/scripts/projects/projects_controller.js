@@ -1,8 +1,8 @@
 (function(){
 
 	angular.module('FinalProject')
-		.controller('ProjectsControl', ['$scope', '$rootScope', '$cookieStore', 'ProjectFactory', '$location', 'ListsFactory',
-			function ($scope, $rootScope, $cookieStore, ProjectFactory, $location, ListsFactory){
+		.controller('ProjectsControl', ['$scope', '$rootScope', '$cookieStore', 'ProjectFactory', '$location', 'ListsFactory', 'ConsoleFactory',
+			function ($scope, $rootScope, $cookieStore, ProjectFactory, $location, ListsFactory, ConsoleFactory){
 
 				$rootScope.$on('project:added', function () {
 					ProjectFactory.getProjects()
@@ -14,6 +14,8 @@
 						});
 					}); // end success
 				}); // end on
+
+				ConsoleFactory.getTasks();
 
 				ProjectFactory.getProjects()
 					// after getting all projects from server

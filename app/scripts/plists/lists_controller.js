@@ -52,6 +52,7 @@
 				$scope.clickList = function (list) {
 					ListsFactory.clickList(list);
 					$rootScope.$broadcast('list:clicked');
+					console.log($scope.$parent);
 				}; // end clickList
 
 				$scope.deleteList = function (id, index) {

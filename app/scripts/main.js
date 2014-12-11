@@ -11,7 +11,7 @@
     }) // end constant
 		.config( function($routeProvider) {
 			$routeProvider.when('/', {
-				templateUrl: 'templates/home.html',
+				templateUrl: 'scripts/accounts/login_template.html',
 				controller: 'AccountControl'
 			}); // end route
 			$routeProvider.when('/register', {
