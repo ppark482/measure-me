@@ -2914,10 +2914,11 @@ meta.foundation-mq-topbar {
     .accordion .accordion-navigation > a, .accordion dd > a {
       /*background: #efefef;*/
       color: #222222;
-      padding: 1rem;
+      padding: 1rem 10rem;
       display: block;
       font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-      font-size: 1rem; }
+      font-size: 1rem;
+      transition: border 1s linear; }
       .accordion .accordion-navigation > a:hover, .accordion dd > a:hover {
         /*transition: border 1s;*/
         /*border-bottom: 1px solid #D53E2A;*/
@@ -2926,7 +2927,7 @@ meta.foundation-mq-topbar {
       display: none;
       padding: 0.9375em; }
       .accordion .accordion-navigation > .content.active, .accordion dd > .content.active {
-        display: block;
+        /*display: block;*/
         background: white; }
 
 .text-left {
