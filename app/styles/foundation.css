@@ -2900,7 +2900,11 @@ meta.foundation-mq-topbar {
   float: none; }
 
 .accordion {
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  width: 100%; }
+  .accordion > dl {
+    width: 100%;
+  };
   .accordion:before, .accordion:after {
     content: " ";
     display: table; }
@@ -2908,16 +2912,20 @@ meta.foundation-mq-topbar {
     clear: both; }
   .accordion .accordion-navigation, .accordion dd {
     display: block;
+    width: 100%;
     margin-bottom: 0 !important; }
     .accordion .accordion-navigation.active > a, .accordion dd.active > a {
+      text-transform: uppercase;
       /*background: #e8e8e8;*/ }
     .accordion .accordion-navigation > a, .accordion dd > a {
       /*background: #efefef;*/
       color: #222222;
-      padding: 1rem 10rem;
+      text-transform: uppercase;
+      padding: 1rem 0rem;
       display: block;
       font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
       font-size: 1rem;
+      text-align: right;
       transition: border 1s linear; }
       .accordion .accordion-navigation > a:hover, .accordion dd > a:hover {
         /*transition: border 1s;*/

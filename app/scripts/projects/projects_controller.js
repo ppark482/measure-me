@@ -38,6 +38,15 @@
 						});
 				}; // end clickProject
 
+				$scope.completed = function (project) {
+					console.log(project);
+					if(project.hours/project.hoursCompleted === 1) {
+						return true;
+					} else {
+						return false;
+					};
+				};
+
 			} // end function
 		]); // end controller
 }()); // end iff
