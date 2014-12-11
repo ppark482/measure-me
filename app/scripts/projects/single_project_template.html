@@ -20,14 +20,13 @@
 <div style="padding: 80px 20px 20px 20px" class="projectWrapper">
 	<div class="half">
 		<h3>{{ project.title }}</h3>
-		<ul>
-			<li>Expected number of weeks to completion: {{ project.weeks }} </li>
-			<li>Project was created at {{ project.createdAt }}</li>
-			<li>Expected number of total hours to completion: <span class="hours">{{ project.hours }}</span></li>
-		</ul>
 		<div id="projectChartDisplay" ng-controller="ProjectChartsControl">
 		  <canvas tc-chartjs chart-type="line" chart-data="data" chart-options="options" width="300" height="200"></canvas>
 		</div>
+		<ul>
+			<li>Expected number of weeks: {{ project.weeks }} </li>
+			<li>Expected number of total hours to completion: <span class="hours">{{ project.hours }}</span></li>
+		</ul>
 	</div>
 	<div class="half" ng-controller="ListsControl">
 		<div> <!-- 1 -->
@@ -38,7 +37,7 @@
 			<div ng-controller="AccordionController">
 				<accordion class="flex-boxes" close-others="true">
 					<!-- ================================ REPLICATING ================================ -->
-					<accordion-group class="flex-box" heading="{{ list.title }} :: {{ list.hoursLeft }} hours left" id="{{ list.objectId }}" ng-repeat="list in lists" ng-click="clickList(list)" style="text-align:right">
+					<accordion-group class="flex-box" heading="{{ list.title }} :: {{ list.hoursLeft }} hours left" id="{{ list.objectId }}" ng-repeat="list in lists" ng-click="clickList(list)" style="text-align:center">
 						<ul>
 							<li>
 								<div ng-controller="TasksControl">

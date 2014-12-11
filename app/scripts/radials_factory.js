@@ -153,7 +153,6 @@
                 };
             }
 
-
             function measure() {
                 _width=_diameter - _margin.right - _margin.left - _margin.top - _margin.bottom;
                 _height=_width;
@@ -163,7 +162,6 @@
                 _arc2.outerRadius(_width/2 * .85);
                 _arc2.innerRadius(_width/2 * .85 - (_width/2 * .15));
             }
-
 
             component.render = function() {
                 measure();
@@ -231,5 +229,4 @@
 
       } // end function
     ]); // end factory
-    
 }()); // end iif
