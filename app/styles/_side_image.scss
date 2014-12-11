@@ -1,4 +1,4 @@
-$side-image-background-top: #B5EBEB;
+/*$side-image-background-top: #B5EBEB;
 $side-image-background-bottom: #5DAC5D;
 $side-image-border: 1px solid darken(transparentize($side-image-background-bottom, .8), 30);
 
@@ -10,7 +10,7 @@ $side-image-border: 1px solid darken(transparentize($side-image-background-botto
   }
 
   .images-wrapper {
-    @include background(url('https://s3.amazonaws.com/f.cl.ly/items/2U1e383d0i1c2f0V3S1r/Image%202014-12-10%20at%208.14.08%20AM.png'), linear-gradient($side-image-background-top, $side-image-background-bottom), no-repeat $side-image-background-top scroll);
+    @include background(url('http://www.boostlabs.com/wp-content/uploads/2012/08/gantt-chart.jpg'), linear-gradient($side-image-background-top, $side-image-background-bottom), no-repeat $side-image-background-top scroll);
     background-color: $side-image-background-top;
     border-bottom: $side-image-border;
     background-size: cover;
@@ -59,3 +59,4 @@ $side-image-border: 1px solid darken(transparentize($side-image-background-botto
   }
   @include reset-display();
 }
+*/

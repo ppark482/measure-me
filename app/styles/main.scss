@@ -28,7 +28,7 @@
   background-color: #eee;
   border-radius: 6px;
   padding: 60px;
-  background: url(https://s3.amazonaws.com/f.cl.ly/items/2U1e383d0i1c2f0V3S1r/Image%202014-12-10%20at%208.14.08%20AM.png) no-repeat center center fixed; 
+  background: url(http://www.bustler.net/images/news2/politics_of_parametricism_02.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -37,6 +37,28 @@
     width: 400px;
   }
 }*/
+.cover {
+  background: url('http://www.boostlabs.com/wp-content/uploads/2012/08/gantt-chart.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 800px;
+  padding-top: 50px;
+}
+#loginWrapper {
+  padding: 60px;
+  /*background-color: HSLA(39, 90%, 66%, 1);*/
+  background-color: HSLA(0, 0%, 100%, .95);
+  margin: 0 auto;
+  display: block;
+  width: 50%;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px HSLA(215, 25%, 34%, 1);
+  #loginSection {
+    width: 400px;
+  }
+}
 
 .projectWrapper {
   @include outer-container;
