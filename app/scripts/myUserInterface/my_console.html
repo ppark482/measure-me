@@ -2,6 +2,7 @@
 	<div class="navigation-wrapper">
 		<div class="nav">
 			<ul id="navigation-menu">
+				<li class="nav-link measureme"><a href="#/myconsole">measure.me</a></li>
 				<li class="nav-link"><a>Welcome {{ user.username }}</a></li>
 				<li class="nav-link"><a>Signed in as {{ user.email }}</a></li>
 				<!-- <li class="nav-link"><a>{{ date }}</a></li> -->
@@ -9,7 +10,7 @@
 		</div> <!-- end nav -->
 		<div class="navigation-tools" ng-controller="MainModalControl">
 			<div class="search-and-submit">
-				<button class="button" ng-click="logout()">Log Out</button>
+				<button style="background-color:#D53E2A" class="button" ng-click="logout()">Log Out</button>
 			  <button class="button" ng-click="open()">Add Project</button>
 			</div>
 		</div>

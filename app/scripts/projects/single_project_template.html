@@ -2,8 +2,9 @@
 	<div class="navigation-wrapper">
 		<div class="nav">
 			<ul id="navigation-menu">
+				<li class="nav-link measureme"><a href="#/myconsole">measure.me</a></li>
 				<li class="nav-link"><a>Welcome {{ user.username }}</a></li>
-				<li class="nav-link"><a>Signed in as {{ user.email }}</a></li>
+				<!-- <li class="nav-link"><a>Signed in as {{ user.email }}</a></li> -->
 				<li class="nav-link"><a ng-click="logout()">Log Out</a></li>
 			</ul>
 		</div> <!-- end nav -->
@@ -35,9 +36,9 @@
 				<button class="button" ng-click="addList(list)">New List</button>
 			</div>
 			<div ng-controller="AccordionController">
-				<accordion close-others="true">
+				<accordion class="flex-boxes" close-others="true">
 					<!-- ================================ REPLICATING ================================ -->
-					<accordion-group heading="{{ list.title }} || {{ list.hoursLeft }} of {{ list.totalHours }} hours remaining" id="{{ list.objectId }}" ng-repeat="list in lists" ng-click="clickList(list)">
+					<accordion-group class="flex-box" heading="{{ list.title }} || {{ list.hoursLeft }} hours left" id="{{ list.objectId }}" ng-repeat="list in lists" ng-click="clickList(list)" style="text-align:right">
 						<ul>
 							<li>
 								<div ng-controller="TasksControl">

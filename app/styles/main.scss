@@ -9,6 +9,9 @@
 @import 'navBarStyles';
 @import 'textures';
 @import 'task_table';
+@import 'side_image';
+@import 'tooltip';
+@import 'list_styles';
 
 // Custom Styles
 /*body {
@@ -79,6 +82,13 @@ li {
   }
 }
 
+.measureme {
+  color: #D53E2A;
+  a {
+    color: #D53E2A;
+  }
+}
+
 /* ====================== Textures ====================== */
 .texture {
   height: 5em;
@@ -99,3 +109,4 @@ li {
   width: 50%;
 }
 /* ==================== end Textures ==================== */
+
